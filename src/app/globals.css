@@ -34,10 +34,10 @@ h6 {
   text-wrap: balance;
 }
 
-p {
+/* p {
   max-width: 75ch;
   text-wrap: pretty;
-}
+} */
 
 .grida {
   display: grid;
