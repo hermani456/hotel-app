@@ -1,19 +1,26 @@
 "use client";
 import React from "react";
 import { useRef } from "react";
-import logo  from "../../../public/next.svg";
+import logo from "../../../public/next.svg";
 import Image from "next/image";
 import Link from "next/link";
 import { navItems } from "@/utils";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const ref = useRef(null);
-  
+
   return (
     <nav className="bg-text">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-5">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-5 pt-5 md:pt-0">
         <div className="">
           <Image src={logo} alt="logo" width={125} className="m-0 p-0" />
         </div>
@@ -58,6 +65,16 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
+        </div>
+        <div className="hidden md:block">
+          <SignedOut>
+            <div className="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
+              <SignInButton />
+            </div>
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
         </div>
       </div>
     </nav>
