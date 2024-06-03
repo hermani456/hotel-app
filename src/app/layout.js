@@ -7,7 +7,8 @@ import {
 } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import "./globals.css";
-import Container from "./components/ui/Container";
+import { ThemeProvider } from "@/app/components/theme-provider";
+
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider
@@ -17,7 +18,14 @@ export default function RootLayout({ children }) {
     >
       <html lang="es">
         <body>
-          {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
