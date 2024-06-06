@@ -30,3 +30,25 @@ export const navItems = [
     path: "/dashboard",
   },
 ];
+export const roomItems =[
+  {
+    id:1,
+    title:'Pieza 1',
+
+  },
+  {
+    id:2,
+    title:'Pieza 2',
+
+  },
+  {
+    id:1,
+    title:'Pieza 3',
+
+  },
+  {
+    id:1,
+    title:'Pieza 4',
+
+  },
+];
