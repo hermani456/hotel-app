@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import { Button } from "./button";
 import {
   Card,
@@ -10,15 +8,26 @@ import {
   CardTitle,
 } from "./card";
 import { Separator } from "./separator";
+import Image from "next/image";
+import image from "../../../../public/img/hero/1.webp";
+import { Item } from "@radix-ui/react-navigation-menu";
 
-export function CardHotel({ title, description, price }) {
+export function CardHotel({ title, description, img, price }) {
   return (
     <Card className="w-[350px]">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
-      <CardContent></CardContent>
+      <CardContent>
+        <Image
+          src={img}
+          alt="hotel"
+          width={350}
+          height={200}
+          className="object-cover rounded-md"
+        />
+      </CardContent>
       <Separator className="my-4" />
       <CardFooter className="flex flex-col items-start">
         <CardDescription className="w-full text-left text-xl mb-4">
@@ -26,9 +35,6 @@ export function CardHotel({ title, description, price }) {
         </CardDescription>
         <div className="flex justify-between w-full space-x-8">
           <Button className="w-full">Reservar</Button>
-          <Button className="w-full" variant="outline">
-            Agregar al carro
-          </Button>
         </div>
       </CardFooter>
     </Card>
