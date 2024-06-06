@@ -1,5 +1,3 @@
-import { PrinterIcon } from "lucide-react";
-
 export const navItems = [
   {
     id: 1,
