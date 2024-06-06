@@ -8,7 +8,7 @@ const Hero = () => {
   return (
     <div className="relative">
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
-        <h1 className="text-6xl">Bienvenidos al hotel qliao</h1>
+        <h1 className="text-6xl">Bienvenidos al hotel</h1>
         <p className="text-4xl">donde el confort no se acaba nunca</p>
       </div>
       <Carousel images={[image1, image2, image3]} />
