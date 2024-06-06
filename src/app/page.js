@@ -8,8 +8,8 @@ export default function Home() {
     <>
       <Navbar />
       <Hero />
-      <Footer />
       <HotelRoom />
+      <Footer />
     </>
   );
 }

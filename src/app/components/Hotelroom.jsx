@@ -5,7 +5,7 @@ import '@/utils/style.css'; // Asegúrate de importar tu archivo CSS
 
 export default function HotelRoom() {
   return (
-    <div className="flex flex-col items-center h-screen bg-gray-100">
+    <div className="flex flex-col items-center h-screen ">
       <div className="flex justify-center items-center w-full py-8">
         <div className="text-gray-500 select-none text-[clamp(2rem,calc(2rem+3.5vw),8rem)] bubble-text">
           <span className="font-light transition-all duration-200 ease-linear hover:font-black hover:text-black">H</span>
@@ -24,7 +24,7 @@ export default function HotelRoom() {
       </div>
       <div className="flex flex-wrap justify-center w-full gap-4">
         {roomItems.map((item, i) => (
-          <CardHotel key={i} />
+          <CardHotel key={i} title={item.title} description={item.description} price={item.price}/>
         ))}
       </div>
     </div>
