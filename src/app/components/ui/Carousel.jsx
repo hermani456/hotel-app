@@ -38,8 +38,7 @@ const Carousel = ({ images }) => {
           >
             <Image
               src={src}
-            //   width={}
-            //   height={}
+              fill
               alt="carousel"
               className="absolute inset-0 object-cover w-full h-full"
               onContextMenu={(e) => e.preventDefault()}
