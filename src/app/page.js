@@ -10,6 +10,7 @@ export default function Home() {
       <Hero />
       <HotelRoom />
       <Footer />
+      <Test />
     </>
   );
 }

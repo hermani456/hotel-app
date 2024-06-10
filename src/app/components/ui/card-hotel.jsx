@@ -9,8 +9,7 @@ import {
 } from "./card";
 import { Separator } from "./separator";
 import Image from "next/image";
-import image from "../../../../public/img/hero/1.webp";
-import { Item } from "@radix-ui/react-navigation-menu";
+// import { Item } from "@radix-ui/react-navigation-menu";
 
 export function CardHotel({ title, description, img, price }) {
   return (
@@ -25,7 +24,7 @@ export function CardHotel({ title, description, img, price }) {
           alt="hotel"
           width={350}
           height={200}
-          className="object-cover rounded-md"
+          className="object-cover rounded-md h-48 w-full"
         />
       </CardContent>
       <Separator className="my-4" />
