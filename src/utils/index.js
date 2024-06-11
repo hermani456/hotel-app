@@ -13,8 +13,8 @@ export const navItems = [
   },
   {
     id: 3,
-    name: "Contact",
-    path: "/contact",
+    name: "Reserva",
+    path: "/reserva",
   },
   {
     id: 4,

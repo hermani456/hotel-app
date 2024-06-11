@@ -9,6 +9,7 @@ import {
 } from "./card";
 import { Separator } from "./separator";
 import Image from "next/image";
+import Link from "next/link";
 // import { Item } from "@radix-ui/react-navigation-menu";
 
 export function CardHotel({ title, description, img, price }) {
@@ -33,7 +34,9 @@ export function CardHotel({ title, description, img, price }) {
           Precio $ {price}
         </CardDescription>
         <div className="flex justify-between w-full space-x-8">
-          <Button className="w-full">Reservar</Button>
+          <Link href="/reserva?title={title}">
+            <Button className="w-full">reservar</Button>
+          </Link>
         </div>
       </CardFooter>
     </Card>
