@@ -1,9 +1,10 @@
-"user client";
+"use client";
 import React from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+
 const page = () => {
   const router = useRouter();
-  const { title } = router.query;
+  const { title } = router?.useSearchParams;
   console.log(title);
   return <div>page</div>;
 };
