@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "../components/ui/form";
 import { Input } from "../components/ui/input";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -27,6 +28,12 @@ export default function BookingForm() {
   const onSubmit = form.handleSubmit((data) => {
     console.log(data);
   });
+
+  useEffect(() => {
+    fetch("/api/reserva")
+      .then((res) => res.json())
+      .then((data) => console.log("data",data));
+  }, []);
 
   return (
     <Container>
