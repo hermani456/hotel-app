@@ -23,7 +23,7 @@ const formSchema = z.object({
   }),
 });
 
-export default function BookingForm() {
+export default function BookingForm({price}) {
   const form = useForm();
   const onSubmit = form.handleSubmit((data) => {
     console.log(data);
@@ -46,7 +46,7 @@ export default function BookingForm() {
               <FormItem>
                 <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} />
+                  <Input placeholder={price} {...field} />
                 </FormControl>
                 <FormDescription>
                   This is your public display name.
