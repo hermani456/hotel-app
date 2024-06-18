@@ -23,7 +23,7 @@ const formSchema = z.object({
   }),
 });
 
-export default function BookingForm({price}) {
+export default function BookingForm({price, title}) {
   const form = useForm();
   const onSubmit = form.handleSubmit((data) => {
     console.log(data);
@@ -44,7 +44,7 @@ export default function BookingForm({price}) {
             name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>{title}</FormLabel>
                 <FormControl>
                   <Input placeholder={price} {...field} />
                 </FormControl>

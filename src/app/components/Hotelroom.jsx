@@ -7,6 +7,7 @@ import BookingForm from "./BookingForm";
 export default function HotelRoom() {
   const [showForm, setShowForm] = useState(false);
   const [price, setPrice] = useState(0);
+  const [title, setTitle] = useState("");
   return (
     <div className="flex flex-col items-center min-h-screen">
       <div className="flex justify-center items-center w-full py-8">
@@ -22,10 +23,11 @@ export default function HotelRoom() {
             price={item.price}
             setShowForm={setShowForm}
             setPrice={setPrice}
+            setTitle={setTitle}
           />
         ))}
       </div>
-      {showForm && <BookingForm price={price} />}
+      {showForm && <BookingForm price={price} title={title} />}
     </div>
   );
 }

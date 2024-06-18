@@ -15,7 +15,13 @@ import Link from "next/link";
 import BookingForm from "../BookingForm";
 // import { Item } from "@radix-ui/react-navigation-menu";
 
-export function CardHotel({ title, description, img, price, setShowForm }) {
+export function CardHotel({ title, description, img, price, setShowForm, setPrice, setTitle }) {
+
+  const handleClick = () => {
+    setShowForm(true);
+    setPrice(price);
+    setTitle(title);
+  }
   return (
     <section className="grid">
       <Card className="w-[350px]">
@@ -39,7 +45,7 @@ export function CardHotel({ title, description, img, price, setShowForm }) {
           </CardDescription>
           <div className="flex justify-between w-full space-x-8">
             {/* <Link href={`/reserva?title=${title}`}> */}
-            <Button onClick={() => setShowForm(true)} className="w-full">
+            <Button onClick={handleClick} className="w-full">
               reservar
             </Button>
             {/* </Link> */}
