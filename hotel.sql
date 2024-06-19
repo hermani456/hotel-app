@@ -78,6 +78,8 @@ INSERT INTO huesped VALUES (1, 'Juan', 'Perez', '1990-01-01', 'Calle 456', '1234
 INSERT INTO reserva VALUES (1, 1, 1, '2021-01-01', '2021-01-03', 200000);
 INSERT INTO reserva VALUES (2, 1, 2, '2021-01-01', '2021-01-03', 300000);
 
+-- INSERT INTO reserva (id_reserva, id_huesped, numero_habitacion, fecha_checkin, fecha_checkout, precio_total) VALUES (3, 1, 3, '2021-01-01', '2021-01-03', 300000);
+
 INSERT INTO pago VALUES (1, 1, 200000, '2021-01-01', 'Efectivo');
 
 -- check habitaciones disponible

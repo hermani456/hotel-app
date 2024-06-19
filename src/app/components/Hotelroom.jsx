@@ -3,11 +3,20 @@ import React, { useState } from "react";
 import { CardHotel } from "./ui/card-hotel";
 import { roomItems } from "@/utils";
 import BookingForm from "./BookingForm";
+import { useUser } from "@clerk/nextjs";
+
 
 export default function HotelRoom() {
   const [showForm, setShowForm] = useState(false);
   const [price, setPrice] = useState(0);
   const [title, setTitle] = useState("");
+
+  const { isLoaded, isSignedIn, user } = useUser();
+  // console.log(user)
+
+  if (!isLoaded || !isSignedIn) {
+    return null;
+  }
   return (
     <div className="flex flex-col items-center min-h-screen">
       <div className="flex justify-center items-center w-full py-8">
@@ -27,7 +36,7 @@ export default function HotelRoom() {
           />
         ))}
       </div>
-      {showForm && <BookingForm price={price} title={title} />}
+      {showForm && <BookingForm price={price} title={title} user={user} />}
     </div>
   );
 }

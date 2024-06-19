@@ -12,7 +12,7 @@ export default function Home() {
       <HotelRoom />
       <BookingForm />
       <Footer />
-      <Test />
+      {/* <Test /> */}
     </>
   );
 }
