@@ -16,9 +16,16 @@ CREATE TABLE tipo_habitacion (
     id_tipo_habitacion INT PRIMARY KEY,
     nombre VARCHAR(50),
     descripcion VARCHAR(255),
-    precio DECIMAL(10, 2),
+    precio INT,
     capacidad INT
 );
+
+CREATE SEQUENCE reserva_id_reserva_seq START WITH 1;
+ALTER TABLE reserva ALTER COLUMN id_reserva SET DEFAULT nextval('reserva_id_reserva_seq');
+ALTER SEQUENCE reserva_id_reserva_seq OWNED BY reserva.id_reserva;
+
+ALTER TABLE tipo_habitacion
+ALTER COLUMN precio TYPE INT USING precio::INT;
 
 CREATE TABLE habitacion (
     numero_habitacion INT PRIMARY KEY,
@@ -37,6 +44,10 @@ CREATE TABLE huesped (
     email VARCHAR(255)
 );
 
+CREATE SEQUENCE id_huesped_seq START WITH 2;
+ALTER TABLE huesped ALTER COLUMN id_huesped SET DEFAULT nextval('id_huesped_seq');
+ALTER SEQUENCE id_huesped_seq OWNED BY huesped.id_huesped;
+
 CREATE TABLE reserva (
     id_reserva INT PRIMARY KEY,
     id_huesped INT NOT NULL REFERENCES huesped(id_huesped),
@@ -45,6 +56,13 @@ CREATE TABLE reserva (
     fecha_checkout DATE,
     precio_total DECIMAL(10, 2)
 );
+
+CREATE SEQUENCE reserva_id_reserva_seq;
+ALTER TABLE reserva ALTER COLUMN id_reserva SET DEFAULT nextval('reserva_id_reserva_seq');
+SELECT setval('reserva_id_reserva_seq', COALESCE((SELECT MAX(id_reserva)+1 FROM reserva), 1), false);
+
+ALTER TABLE reserva
+ALTER COLUMN precio_total TYPE INT USING precio_total::INT;
 
 CREATE TABLE pago (
     id_pago INT PRIMARY KEY,
@@ -73,7 +91,11 @@ INSERT INTO habitacion VALUES (1, 1, 1, 'Disponible');
 INSERT INTO habitacion VALUES (2, 1, 1, 'Disponible');
 INSERT INTO habitacion VALUES (3, 1, 2, 'Disponible');
 
+-- INSERT INTO Habitacion (numero_habitacion, id_hotel, id_tipo_habitacion, estado) VALUES (4, 1, 2, 'Disponible');
+
 INSERT INTO huesped VALUES (1, 'Juan', 'Perez', '1990-01-01', 'Calle 456', '1234567', 'juan@juan.cl');
+
+INSERT INTO huesped (nombre, apellido, direccion, telefono, email) VALUES ('Maria', 'Lopez', 'Calle 789', '7654321', 'mail@mail.cl');
 
 INSERT INTO reserva VALUES (1, 1, 1, '2021-01-01', '2021-01-03', 200000);
 INSERT INTO reserva VALUES (2, 1, 2, '2021-01-01', '2021-01-03', 300000);
@@ -82,3 +104,6 @@ INSERT INTO pago VALUES (1, 1, 200000, '2021-01-01', 'Efectivo');
 
 -- check habitaciones disponible
 -- SELECT * FROM habitacion WHERE estado = 'Disponible';
+
+-- select from tipo_habitacion and habitacion;
+SELECT numero_habitacion, nombre, descripcion, precio, capacidad, estado FROM habitacion h INNER JOIN tipo_habitacion th ON h.id_tipo_habitacion = th.id_tipo_habitacion;

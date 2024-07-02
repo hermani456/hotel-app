@@ -10,9 +10,9 @@ export default function Home() {
       <Navbar />
       <Hero />
       <HotelRoom />
-      <BookingForm />
+      {/* <BookingForm /> */}
       <Footer />
-      <Test />
+      {/* <Test /> */}
     </>
   );
 }
