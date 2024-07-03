@@ -9,6 +9,13 @@ const page = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [rooms, setRooms] = useState([]);
   const [nombreHabitacion, setNombreHabitacion] = useState("");
+  const [habitacionDisponible, setHabitacionDisponible] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/checkhabitacion")
+      .then((res) => res.json())
+      .then((data) => setHabitacionDisponible(data));
+  }, []);
 
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
@@ -26,35 +33,41 @@ const page = () => {
       .then((data) => setNombreHabitacion(data));
   }, []);
 
-  useEffect(() => {
-    fetch("/api/reserva")
-      .then((res) => res.json())
-      .then((data) => setRooms(data));
-  }, []);
+  // useEffect(() => {
+  //   fetch("/api/reserva")
+  //     .then((res) => res.json())
+  //     .then((data) => setRooms(data));
+  // }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const newRoomType = {
-      nombre,
-      descripcion,
-      precio,
-      capacidad,
+      numeroHabitacion,
+      fechaIngreso,
+      fechaSalida,
+      precioTotal,
     };
-    fetch("/api/tiposdehabitacion", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newRoomType),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setRooms((prevRooms) => [...prevRooms, data]);
-        setNombre("");
-        setDescripcion("");
-        setPrecio("");
-        setCapacidad("");
-      });
+    console.log("newRoomType", newRoomType);
+    setRooms((prevRooms) => [...prevRooms, newRoomType]);
+    setNumeroHabitacion("");
+    setFechaIngreso("");
+    setFechaSalida("");
+    setPrecioTotal("");
+    // fetch("/api/tiposdehabitacion", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(newRoomType),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setRooms((prevRooms) => [...prevRooms, data]);
+    //     setNombre("");
+    //     setDescripcion("");
+    //     setPrecio("");
+    //     setCapacidad("");
+    //   });
   };
 
   const handleDelete = (id) => {
@@ -80,21 +93,33 @@ const page = () => {
         </h1>
         <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
           <div className="relative z-0 w-full mb-5 group">
-            <input
-              type="text"
-              name="numeroHabitacion"
-              id="numeroHabitacion"
-              className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=""
+            <select
+              name="tipoHabitacion"
+              id="tipoHabitacion"
+              className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               value={numeroHabitacion}
               onChange={(e) => setNumeroHabitacion(e.target.value)}
               required
-            />
+            >
+              <option value="" disabled>
+                Selecione Tipo Habitacion
+              </option>
+              {habitacionDisponible &&
+                habitacionDisponible.map((tipo, i) => (
+                  <option
+                    className="text-black"
+                    key={i}
+                    value={[tipo.numero_habitacion, tipo.nombre]}
+                  >
+                    {tipo.nombre}
+                  </option>
+                ))}
+            </select>
             <label
               htmlFor="numeroHabitacion"
               className="peer-focus:font-medium absolute text-sm text-gray-950 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              Numero habitacion
+              Tipo Habitacion
             </label>
           </div>
           <div className="relative z-0 w-full mb-5 group">
@@ -160,7 +185,7 @@ const page = () => {
         </form>
         {rooms.length === 0 ? (
           <h2 className="text-2xl font-bold text-text text-center mt-5">
-            No hay tipos de habitaciones disponibles
+            No hay tipos de reservas disponibles
           </h2>
         ) : (
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
@@ -191,21 +216,31 @@ const page = () => {
                 </tr>
               </thead>
               <tbody>
-              {/* id_reserva | numero_habitacion | fecha_checkin | fecha_checkout | precio_total */}
+                {/* id_reserva | numero_habitacion | fecha_checkin | fecha_checkout | precio_total */}
                 {rooms.map((room) => (
                   <tr
-                    key={room.id_reserva}
+                    key={room.numeroHabitacion}
                     className="odd:bg-white even:bg-gray-50"
                   >
                     <th
                       scope="row"
                       className="px-6 py-4 font-medium  whitespace-nowrap"
                     >
-                      {room.numero_habitacion}
+                      {room.numeroHabitacion.split(",")[0]}
                     </th>
-                    <td className="px-6 py-4">{room.nombre}</td>
-                    <td className="px-6 py-4">{new Date(room.fecha_checkin).toLocaleDateString('es-ES')}</td>
-                    <td className="px-6 py-4">{new Date(room.fecha_checkout).toLocaleDateString('es-ES')}</td>
+                    <td className="px-6 py-4">
+                      {room.numeroHabitacion.split(",")[1]}
+                    </td>
+                    <td className="px-6 py-4">
+                      {new Date(
+                        room.fechaIngreso + "T12:00:00"
+                      ).toLocaleDateString("es-ES")}
+                    </td>
+                    <td className="px-6 py-4">
+                      {new Date(
+                        room.fechaSalida + "T12:00:00"
+                      ).toLocaleDateString("es-ES")}
+                    </td>
                     <td className="px-6 py-4">{room.precio_total}</td>
                     <td className="px-6 py-4">
                       <button onClick={() => updateProduct(room.id)}>
@@ -223,6 +258,11 @@ const page = () => {
             </table>
           </div>
         )}
+      <h2 className="text-2xl font-bold text-text text-center mt-5">
+        agregar huespedes a reserva
+      </h2>
+
+        
       </Container>
     </Layout>
   );
