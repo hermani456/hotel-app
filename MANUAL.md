@@ -3,13 +3,22 @@
 ---
 
 ## Índice
-1. [Tipos de Habitación](#tipos-de-habitación)
-2. [Habitación](#habitación)
-3. [Huésped](#huésped)
-4. [Reserva](#reserva)
-5. [Pasajeros](#pasajeros)
+1. [Acceso al Menú Administrador](#acceso-al-menú-administrador)
+2. [Tipos de Habitación](#tipos-de-habitación)
+3. [Habitación](#habitación)
+4. [Huésped](#huésped)
+5. [Reserva](#reserva)
+6. [Pasajeros](#pasajeros)
 
 ---
+
+## Acceso al Menú Administrador
+
+Para acceder al Menú Administrador, asegúrate de estar logeado con tu cuenta de Google:
+
+1. Desde la esquina superior derecha, haz clic en el botón "Login".
+2. Ingresa tus credenciales de Google para iniciar sesión.
+3. Una vez logeado, selecciona "Admin" en el menú para acceder a las funciones de administración.
 
 ## Tipos de Habitación
 
@@ -78,6 +87,6 @@
      - **Fecha de Ingreso**: La fecha en la que el huésped ingresó al hotel.
      - **Fecha de Salida**: La fecha en la que el huésped saldrá del hotel.
 
----
 
-Este manual proporciona una guía básica para administrar las operaciones clave en la aplicación de administración de hoteles. Para obtener más detalles o soporte, consulta la documentación completa o contacta al soporte técnico.
+
+---
