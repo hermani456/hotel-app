@@ -6,6 +6,11 @@ const isProtectedRoute = createRouteMatcher([
   '/dashboard(.*)',
   '/about(.*)',
   '/reserva(.*)',
+  '/admin(.*)',
+  '/tipohabitacion(.*)',
+  '/habitacion(.*)',
+  '/huesped(.*)',
+  '/pasajeros(.*)',
 ]);
 
 export default clerkMiddleware((auth, req) => {

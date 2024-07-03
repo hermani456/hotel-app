@@ -126,6 +126,7 @@ const page = () => {
       },
       body: JSON.stringify(data),
     });
+    setHuespedesSeleccionados([]);
   };
 
   const handleDelete = (id) => {
@@ -274,7 +275,6 @@ const page = () => {
                 </tr>
               </thead>
               <tbody>
-                {/* id_reserva | numero_habitacion | fecha_checkin | fecha_checkout | precio_total */}
                 {rooms.map((room) => (
                   <tr
                     key={room.numeroHabitacion}
@@ -319,11 +319,11 @@ const page = () => {
         {rooms.length === 0 ? (
           <div> </div>
         ) : (
-          <div>
+          <div className="mx-auto">
             <h2 className="text-2xl font-bold text-text text-center mt-5">
               agregar huespedes a reserva
             </h2>
-            <div>
+            <div className="flex flex-col justify-center items-center space-y-5">
               <select
                 className="border border-gray-300 rounded-md p-2"
                 onChange={handleSelectHuesped}
@@ -339,7 +339,7 @@ const page = () => {
 
               <div>
                 <h3>Huespedes Seleccionados:</h3>
-                <ul>
+                <ul className="text-center">
                   {huespedesSeleccionados.map((huesped) =>
                     huesped ? (
                       <li key={huesped.id_huesped}>{huesped.nombre}</li>
@@ -347,7 +347,7 @@ const page = () => {
                   )}
                 </ul>
               </div>
-              <Button onClick={handleSubmitToReservaHuesped}>click</Button>
+              <Button onClick={handleSubmitToReservaHuesped}>Agregar</Button>
             </div>
           </div>
         )}

@@ -166,9 +166,12 @@ const page = () => {
             )}
           </div>
         </form> */}
+        <h1 className="text-2xl font-bold text-text text-center mt-5">
+          Resumen de Pasajeros
+        </h1>
         {rooms.length === 0 ? (
           <h2 className="text-2xl font-bold text-text text-center mt-5">
-            No hay habitaciones disponibles
+            No hay pasajeros alojados
           </h2>
         ) : (
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
@@ -218,7 +221,11 @@ const page = () => {
                     <td className="px-6 py-4">
                       {new Date(room.fecha_checkin).toLocaleDateString("es-ES")}
                     </td>
-                    <td className="px-6 py-4">{new Date(room.fecha_checkout).toLocaleDateString("es-ES")}</td>
+                    <td className="px-6 py-4">
+                      {new Date(room.fecha_checkout).toLocaleDateString(
+                        "es-ES"
+                      )}
+                    </td>
                     {/* <td className="px-6 py-4">{room.estado}</td> */}
                     {/* <td className="px-6 py-4">
                       <button onClick={() => updateProduct(room.id)}>

@@ -90,7 +90,7 @@ const page = () => {
   //     });
   // };
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     console.log("id", id);
     fetch("/api/habitacion", {
       method: "DELETE",
