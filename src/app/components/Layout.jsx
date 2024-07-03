@@ -21,17 +21,17 @@ const Layout = ({ children }) => {
             </li>
             <li>
               <Button variant="ghost">
-                <Link href="/habitacion">Habitación</Link>
+                <Link href="/habitacion">Habitaciones</Link>
               </Button>
             </li>
             <li>
               <Button variant="ghost">
-                <Link href="/huesped">Huesped</Link>
+                <Link href="/huesped">Huespedes</Link>
               </Button>
             </li>
             <li>
               <Button variant="ghost">
-                <Link href="/reserva">Reserva</Link>
+                <Link href="/reserva">Reservas</Link>
               </Button>
             </li>
             <li>

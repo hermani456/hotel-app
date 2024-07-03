@@ -17,13 +17,12 @@
    - Desde el menu Admin, selecciona "Tipos de Habitación".
 
 2. **Agregar un nuevo tipo de habitación**:
-   - Haz clic en el botón "Agregar Tipo de Habitación".
    - Completa los campos requeridos:
      - **Nombre de la Habitación**: Escribe el nombre del tipo de habitación.
      - **Descripción**: Proporciona una breve descripción del tipo de habitación.
      - **Precio de la Habitación**: Ingresa el precio por noche de la habitación.
      - **Capacidad**: Indica la cantidad máxima de personas que puede alojar la habitación.
-   - Haz clic en "Guardar" para finalizar.
+   - Haz clic en "Agregar" para finalizar.
 
 ## Habitación
 
@@ -31,12 +30,11 @@
    - Desde el menu Admin, selecciona "Habitaciones".
 
 2. **Agregar una nueva habitación**:
-   - Haz clic en el botón "Agregar Habitación".
    - Completa los campos requeridos:
      - **Número de Habitación**: Escribe el número de la habitación.
      - **Tipo de Habitación**: Selecciona el tipo de habitación de la lista desplegable (debe haber sido previamente agregado en "Tipos de Habitación").
      - **Estado**: Selecciona el estado actual de la habitación (Disponible u Ocupada).
-   - Haz clic en "Guardar" para finalizar.
+   - Haz clic en "Agregar" para finalizar.
 
 ## Huésped
 
@@ -44,14 +42,13 @@
    - Desde el menu Admin, selecciona "Huéspedes".
 
 2. **Agregar un nuevo huésped**:
-   - Haz clic en el botón "Agregar Huésped".
    - Completa los campos requeridos:
      - **Nombre**: Escribe el nombre del huésped.
      - **Apellido**: Escribe el apellido del huésped.
      - **Dirección**: Proporciona la dirección del huésped.
      - **Teléfono**: Ingresa el número de teléfono del huésped.
      - **Email**: Proporciona el correo electrónico del huésped.
-   - Haz clic en "Guardar" para finalizar.
+   - Haz clic en "Agregar" para finalizar.
 
 ## Reserva
 
@@ -59,7 +56,6 @@
    - Desde el menu Admin, selecciona "Reservas".
 
 2. **Agregar una nueva reserva**:
-   - Haz clic en el botón "Agregar Reserva".
    - Completa los campos requeridos:
      - **Tipo de Habitación**: Selecciona el tipo de habitación de la lista desplegable.
      - **Número de Habitación**: Será asignado automáticamente según la disponibilidad.
@@ -67,6 +63,7 @@
      - **Fecha de Salida**: Selecciona la fecha de salida del huésped.
    - Haz clic en "Guardar" para finalizar.
    - A continuación, selecciona los huéspedes que ocuparán la habitación de la lista de huéspedes disponibles.
+    - Haz clic en "Agregar" para finalizar.
 
 ## Pasajeros
 
