@@ -56,6 +56,4 @@ Esto iniciará tu aplicación en `http://localhost:3000`, donde podrás acceder 
 ### Test de Aplicacion Web
 
 - Prueba la aplicacion Ingresando a:
-```markdown
 [Hotel California App](https://hotel-app-production-104f.up.railway.app/)
-```
