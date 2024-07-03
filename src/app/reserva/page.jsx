@@ -113,12 +113,18 @@ const page = () => {
   };
 
   const handleSubmitToReservaHuesped = () => {
+    if (huespedesSeleccionados.length < habitacionDisponible[0].capacidad) {
+      alert("No hay suficientes huespedes seleccionados")
+      return; // Early return if not enough guests
+    }
+    // console.log(huespedesSeleccionados.length, habitacionDisponible)
     const data = {
       id_reserva: idReserva,
       huespedesSeleccionados: huespedesSeleccionados.map(
         (huesped) => huesped.id_huesped
       ),
     };
+    
     fetch("/api/reservahuesped", {
       method: "POST",
       headers: {
