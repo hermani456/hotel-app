@@ -1,6 +1,7 @@
 // components/Layout.jsx
 import Link from "next/link";
 import Container from "./ui/Container";
+import { Button } from "./ui/button";
 
 const Layout = ({ children }) => {
   return (
@@ -9,21 +10,35 @@ const Layout = ({ children }) => {
         <nav>
           <ul className="flex justify-between">
             <li>
-              <Link href="/">Home</Link>
+              <Button variant="ghost">
+                <Link href="/">Home</Link>
+              </Button>
             </li>
             <li>
-              <Link href="/tipohabitacion">Tipos de Habitacion</Link>
+            <Button variant="ghost">
+                <Link href="/tipohabitacion">Tipos de Habitacion</Link>
+              </Button>
             </li>
             <li>
-              <Link href="/habitacion">Habitación</Link>
+              <Button variant="ghost">
+                <Link href="/habitacion">Habitación</Link>
+              </Button>
             </li>
             <li>
-              <Link href="/huesped">Huesped</Link>
+              <Button variant="ghost">
+                <Link href="/huesped">Huesped</Link>
+              </Button>
             </li>
             <li>
-              <Link href="/reserva">Reserva</Link>
+              <Button variant="ghost">
+                <Link href="/reserva">Reserva</Link>
+              </Button>
             </li>
-            {/* Add more navigation links as needed */}
+            <li>
+              <Button variant="ghost">
+                <Link href="/pasajeros">Pasajeros</Link>
+              </Button>
+            </li>
           </ul>
         </nav>
         <main>{children}</main>

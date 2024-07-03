@@ -1,4 +1,4 @@
-# README.md
+# Proyecto Hotel California
 
 ## Instalación y Ejecución del Proyecto
 

@@ -135,3 +135,16 @@ INSERT INTO pago VALUES (1, 1, 200000, '2021-01-01', 'Efectivo');
 SELECT numero_habitacion, nombre, descripcion, precio, capacidad, estado FROM habitacion h INNER JOIN tipo_habitacion th ON h.id_tipo_habitacion = th.id_tipo_habitacion;
 
 delete from huesped where id_huesped = 2;
+
+SELECT
+    h.nombre AS nombre_huesped,
+    h.apellido,
+    hab.numero_habitacion,
+    th.capacidad,
+    r.fecha_checkin,
+    r.fecha_checkout
+FROM reserva r
+JOIN reserva_huesped rh ON r.id_reserva = rh.id_reserva
+JOIN huesped h ON rh.id_huesped = h.id_huesped
+JOIN habitacion hab ON r.numero_habitacion = hab.numero_habitacion
+JOIN tipo_habitacion th ON hab.id_tipo_habitacion = th.id_tipo_habitacion;

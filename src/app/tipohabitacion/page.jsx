@@ -53,18 +53,30 @@ const page = () => {
   };
 
   const handleDelete = (id) => {
-    console.log("id", id);
-    fetch("/api/huesped", {
+    fetch("/api/tiposdehabitacion", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(id),
     })
-      .then((res) => res.json())
-      .then(() =>
-        setRooms((prevRooms) => prevRooms.filter((r) => r.id_huesped !== id))
-      );
+      .then((res) => {
+        if (!res.ok) {
+          return res.json().then((data) => {
+            alert(data.error);
+            return Promise.reject(data.error);
+          });
+        }
+        return res.json();
+      })
+      .then(() => {
+        setRooms((prevRooms) =>
+          prevRooms.filter((r) => r.id_tipo_habitacion !== id)
+        );
+      })
+      .catch((error) => {
+        console.error("Deletion failed:", error);
+      });
   };
 
   return (
@@ -174,9 +186,9 @@ const page = () => {
                   <th scope="col" className="px-6 py-3">
                     Capacidad
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  {/* <th scope="col" className="px-6 py-3">
                     Editar
-                  </th>
+                  </th> */}
                   <th scope="col" className="px-6 py-3">
                     Borrar
                   </th>
@@ -197,13 +209,15 @@ const page = () => {
                     <td className="px-6 py-4">{room.descripcion}</td>
                     <td className="px-6 py-4">{formatToClp(room.precio)}</td>
                     <td className="px-6 py-4">{room.capacidad}</td>
-                    <td className="px-6 py-4">
+                    {/* <td className="px-6 py-4">
                       <button onClick={() => updateProduct(room.id)}>
                         <EditIcon className="w-5 fill-text" />
                       </button>
-                    </td>
+                    </td> */}
                     <td className="px-6 py-4">
-                      <button onClick={() => handleDelete(room.id_huesped)}>
+                      <button
+                        onClick={() => handleDelete(room.id_tipo_habitacion)}
+                      >
                         <DeleteIcon className="w-5 fill-red-600" />
                       </button>
                     </td>

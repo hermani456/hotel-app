@@ -265,9 +265,9 @@ const page = () => {
                   <th scope="col" className="px-6 py-3">
                     Precio Total
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  {/* <th scope="col" className="px-6 py-3">
                     Editar
-                  </th>
+                  </th> */}
                   <th scope="col" className="px-6 py-3">
                     Borrar
                   </th>
@@ -300,11 +300,11 @@ const page = () => {
                       ).toLocaleDateString("es-ES")}
                     </td>
                     <td className="px-6 py-4">{room.precio_total}</td>
-                    <td className="px-6 py-4">
+                    {/* <td className="px-6 py-4">
                       <button onClick={() => updateProduct(room.id)}>
                         <EditIcon className="w-5 fill-text" />
                       </button>
-                    </td>
+                    </td> */}
                     <td className="px-6 py-4">
                       <button onClick={() => handleDelete(room.id_huesped)}>
                         <DeleteIcon className="w-5 fill-red-600" />

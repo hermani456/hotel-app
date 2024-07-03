@@ -57,7 +57,7 @@ const page = () => {
         return res.json();
       })
       .then((data) => {
-        // setRooms((prevRooms) => [...prevRooms, data]);
+        setRooms((prevRooms) => [...prevRooms, data]);
         setNumeroHabitacion("");
         setHotel("1");
         setTipoHabitacion("");
@@ -218,9 +218,9 @@ const page = () => {
                   <th scope="col" className="px-6 py-3">
                     Estado
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  {/* <th scope="col" className="px-6 py-3">
                     Editar
-                  </th>
+                  </th> */}
                   <th scope="col" className="px-6 py-3">
                     Borrar
                   </th>
@@ -243,11 +243,11 @@ const page = () => {
                     <td className="px-6 py-4">{formatToClp(room.precio)}</td>
                     <td className="px-6 py-4">{room.capacidad}</td>
                     <td className="px-6 py-4">{room.estado}</td>
-                    <td className="px-6 py-4">
+                    {/* <td className="px-6 py-4">
                       <button onClick={() => updateProduct(room.id)}>
                         <EditIcon className="w-5 fill-text" />
                       </button>
-                    </td>
+                    </td> */}
                     <td className="px-6 py-4">
                       <button
                         onClick={() => handleDelete(room.numero_habitacion)}

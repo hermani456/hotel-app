@@ -15,3 +15,38 @@ export async function GET() {
   const data = await pool.query("SELECT * from tipo_habitacion;");
   return NextResponse.json(data.rows);
 }
+
+export async function DELETE(req) {
+  const idTipoHabitacion = await req.json();
+
+  const checkUsage = await pool.query(
+    "SELECT * FROM habitacion WHERE id_tipo_habitacion = $1",
+    [idTipoHabitacion]
+  );
+
+  if (checkUsage.rowCount > 0) {
+    return new Response(
+      JSON.stringify({
+        error: "No puedes eliminar un tipo de habitacion en uso.",
+      }),
+      {
+        status: 400,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }
+
+  const data = await pool.query(
+    "DELETE FROM tipo_habitacion WHERE id_tipo_habitacion = $1 RETURNING *",
+    [idTipoHabitacion]
+  );
+
+  return new Response(JSON.stringify(data.rows[0]), {
+    status: 200,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
