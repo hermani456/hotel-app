@@ -3,9 +3,9 @@
 ---
 
 ## Índice
-1. [Tipos de Habitación](#Tipos de Habitación)
-2. [Habitación](#Habitación)
-3. [Huésped](#Huésped)
+1. [Tipos de Habitación](#tipos-de-habitación)
+2. [Habitación](#habitación)
+3. [Huésped](#huésped)
 4. [Reserva](#reserva)
 5. [Pasajeros](#pasajeros)
 
