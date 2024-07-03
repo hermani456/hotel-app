@@ -124,6 +124,8 @@ INSERT INTO huesped (nombre, apellido, direccion, telefono, email) VALUES ('Mari
 INSERT INTO reserva VALUES (1, 1, 1, '2021-01-01', '2021-01-03', 200000);
 INSERT INTO reserva VALUES (2, 1, 2, '2021-01-01', '2021-01-03', 300000);
 
+INSERT INTO reserva (numero_habitacion, fecha_checkin, fecha_checkout, precio_total) VALUES (3, '2021-01-01', '2021-01-03', 400000);
+
 INSERT INTO pago VALUES (1, 1, 200000, '2021-01-01', 'Efectivo');
 
 -- check habitaciones disponible
@@ -131,3 +133,5 @@ INSERT INTO pago VALUES (1, 1, 200000, '2021-01-01', 'Efectivo');
 
 -- select from tipo_habitacion and habitacion;
 SELECT numero_habitacion, nombre, descripcion, precio, capacidad, estado FROM habitacion h INNER JOIN tipo_habitacion th ON h.id_tipo_habitacion = th.id_tipo_habitacion;
+
+delete from huesped where id_huesped = 2;

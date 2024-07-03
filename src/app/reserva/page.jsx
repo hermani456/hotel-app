@@ -11,27 +11,63 @@ const page = () => {
   const [nombreHabitacion, setNombreHabitacion] = useState("");
   const [habitacionDisponible, setHabitacionDisponible] = useState([]);
 
+  const [huespedesSeleccionados, setHuespedesSeleccionados] = useState([]);
+
   useEffect(() => {
     fetch("/api/checkhabitacion")
       .then((res) => res.json())
       .then((data) => setHabitacionDisponible(data));
   }, []);
 
-  const [nombre, setNombre] = useState("");
-  const [descripcion, setDescripcion] = useState("");
-  const [precio, setPrecio] = useState("");
-  const [capacidad, setCapacidad] = useState("");
-
   const [numeroHabitacion, setNumeroHabitacion] = useState("");
   const [fechaIngreso, setFechaIngreso] = useState("");
   const [fechaSalida, setFechaSalida] = useState("");
   const [precioTotal, setPrecioTotal] = useState("");
+
+  const [huespedes, setHuespedes] = useState([]);
+
+  const [idReserva, setIdReserva] = useState("");
+
+  const [selectedHuesped, setSelectedHuesped] = useState("");
+
+  useEffect(() => {
+    fetch("/api/huesped")
+      .then((res) => res.json())
+      .then((data) => setHuespedes(data));
+  }, []);
 
   useEffect(() => {
     fetch("/api/tipoHabitacion")
       .then((res) => res.json())
       .then((data) => setNombreHabitacion(data));
   }, []);
+
+  const handleSelectHuesped = (event) => {
+    const idHuespedSeleccionado = event.target.value;
+    if (!idHuespedSeleccionado) return; // No hacer nada si el valor es ""
+
+    const huespedSeleccionado = huespedes.find(
+      (huesped) => huesped.id_huesped.toString() === idHuespedSeleccionado
+    );
+    if (!huespedSeleccionado) return; // Verificar que se encontró el huésped
+
+    // Evitar agregar duplicados
+    if (
+      !huespedesSeleccionados.some(
+        (huesped) => huesped.id_huesped === huespedSeleccionado.id
+      )
+    ) {
+      setHuespedesSeleccionados((prev) => [...prev, huespedSeleccionado]);
+    }
+  };
+
+  // Filtrar los huéspedes que no han sido seleccionados
+  const huespedesDisponibles = huespedes.filter(
+    (huesped) =>
+      !huespedesSeleccionados.some(
+        (seleccionado) => seleccionado.id_huesped === huesped.id_huesped
+      )
+  );
 
   // useEffect(() => {
   //   fetch("/api/reserva")
@@ -53,13 +89,19 @@ const page = () => {
     setFechaIngreso("");
     setFechaSalida("");
     setPrecioTotal("");
-    // fetch("/api/tiposdehabitacion", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(newRoomType),
-    // })
+    fetch("/api/reserva", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newRoomType),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const idReserva = data.id_reserva;
+        setIdReserva(idReserva);
+        console.log("idReserva", idReserva);
+      });
     //   .then((res) => res.json())
     //   .then((data) => {
     //     setRooms((prevRooms) => [...prevRooms, data]);
@@ -68,6 +110,22 @@ const page = () => {
     //     setPrecio("");
     //     setCapacidad("");
     //   });
+  };
+
+  const handleSubmitToReservaHuesped = () => {
+    const data = {
+      id_reserva: idReserva,
+      huespedesSeleccionados: huespedesSeleccionados.map(
+        (huesped) => huesped.id_huesped
+      ),
+    };
+    fetch("/api/reservahuesped", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
   };
 
   const handleDelete = (id) => {
@@ -258,11 +316,41 @@ const page = () => {
             </table>
           </div>
         )}
-      <h2 className="text-2xl font-bold text-text text-center mt-5">
-        agregar huespedes a reserva
-      </h2>
+        {rooms.length === 0 ? (
+          <div> </div>
+        ) : (
+          <div>
+            <h2 className="text-2xl font-bold text-text text-center mt-5">
+              agregar huespedes a reserva
+            </h2>
+            <div>
+              <select
+                className="border border-gray-300 rounded-md p-2"
+                onChange={handleSelectHuesped}
+                value={selectedHuesped}
+              >
+                <option value="">Seleccione un Huesped</option>
+                {huespedesDisponibles.map((huesped) => (
+                  <option key={huesped.id_huesped} value={huesped.id_huesped}>
+                    {huesped.nombre}
+                  </option>
+                ))}
+              </select>
 
-        
+              <div>
+                <h3>Huespedes Seleccionados:</h3>
+                <ul>
+                  {huespedesSeleccionados.map((huesped) =>
+                    huesped ? (
+                      <li key={huesped.id_huesped}>{huesped.nombre}</li>
+                    ) : null
+                  )}
+                </ul>
+              </div>
+              <Button onClick={handleSubmitToReservaHuesped}>click</Button>
+            </div>
+          </div>
+        )}
       </Container>
     </Layout>
   );
