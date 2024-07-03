@@ -1,4 +1,4 @@
-# Manual de Usuario para la Aplicación de Administración de Hoteles
+# Manual de Usuario para la Aplicación de Administración de Hotel California
 
 ---
 

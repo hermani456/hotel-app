@@ -52,3 +52,10 @@ npm run dev
 ```
 
 Esto iniciará tu aplicación en `http://localhost:3000`, donde podrás acceder a ella desde tu navegador.
+
+### Test de Aplicacion Web
+
+- Prueba la aplicacion Ingresando a:
+```markdown
+https://hotel-app-production-104f.up.railway.app/
+```
