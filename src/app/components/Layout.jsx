@@ -12,10 +12,16 @@ const Layout = ({ children }) => {
               <Link href="/">Home</Link>
             </li>
             <li>
+              <Link href="/tipohabitacion">Tipos de Habitacion</Link>
+            </li>
+            <li>
               <Link href="/habitacion">Habitación</Link>
             </li>
             <li>
-              <Link href="/admin">Admin</Link>
+              <Link href="/huesped">Huesped</Link>
+            </li>
+            <li>
+              <Link href="/reserva">Reserva</Link>
             </li>
             {/* Add more navigation links as needed */}
           </ul>

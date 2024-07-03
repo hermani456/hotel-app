@@ -18,10 +18,17 @@ export const navItems = [
   },
   {
     id: 4,
-    name: "Dashboard",
-    path: "/dashboard",
+    name: "Admin",
+    path: "/admin",
   },
 ];
+
+export const formatToClp = (price) => {
+  return new Intl.NumberFormat("es-CL", {
+    style: "currency",
+    currency: "CLP",
+  }).format(price);
+};
 
 export const roomItems = [
   {

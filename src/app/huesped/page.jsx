@@ -8,14 +8,13 @@ const page = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [rooms, setRooms] = useState([]);
   const [nombreHabitacion, setNombreHabitacion] = useState("");
-  const [submissionCount, setSubmissionCount] = useState(0);
+  // const [submissionCount, setSubmissionCount] = useState(0);
 
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [direccion, setDireccion] = useState("");
   const [telefono, setTelefono] = useState("");
   const [email, setEmail] = useState("");
-  // id_huesped | nombre | apellido | fecha_nacimiento | direccion | telefono |    email
 
   useEffect(() => {
     fetch("/api/tipoHabitacion")
@@ -27,7 +26,7 @@ const page = () => {
     fetch("/api/huesped")
       .then((res) => res.json())
       .then((data) => setRooms(data));
-  }, [submissionCount]);
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -176,7 +175,7 @@ const page = () => {
         </form>
         {rooms.length === 0 ? (
           <h2 className="text-2xl font-bold text-text text-center mt-5">
-            No hay productos disponibles
+            No hay huespedes disponibles
           </h2>
         ) : (
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">

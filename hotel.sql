@@ -20,6 +20,10 @@ CREATE TABLE tipo_habitacion (
     capacidad INT
 );
 
+CREATE SEQUENCE id_tipo_habitacion_seq START WITH 3;
+ALTER TABLE tipo_habitacion ALTER COLUMN id_tipo_habitacion SET DEFAULT nextval('id_tipo_habitacion_seq');
+ALTER SEQUENCE id_tipo_habitacion_seq OWNED BY tipo_habitacion.id_tipo_habitacion;
+
 CREATE SEQUENCE reserva_id_reserva_seq START WITH 1;
 ALTER TABLE reserva ALTER COLUMN id_reserva SET DEFAULT nextval('reserva_id_reserva_seq');
 ALTER SEQUENCE reserva_id_reserva_seq OWNED BY reserva.id_reserva;
@@ -44,17 +48,34 @@ CREATE TABLE huesped (
     email VARCHAR(255)
 );
 
-CREATE SEQUENCE id_huesped_seq START WITH 2;
+CREATE TABLE reserva_huesped (
+    id_reserva INT NOT NULL,
+    id_huesped INT NOT NULL,
+    PRIMARY KEY (id_reserva, id_huesped),
+    FOREIGN KEY (id_reserva) REFERENCES reserva(id_reserva),
+    FOREIGN KEY (id_huesped) REFERENCES huesped(id_huesped)
+);
+
+INSERT INTO reserva_huesped (id_reserva, id_huesped) VALUES (1, 1); -- Asocia el huésped 1 con la reserva 1
+INSERT INTO reserva_huesped (id_reserva, id_huesped) VALUES (1, 2); -- Asocia el huésped 2 con la reserva 1
+
+SELECT r.id_reserva, h.id_huesped, h.nombre 
+FROM reserva_huesped rh
+JOIN reserva r ON rh.id_reserva = r.id_reserva
+JOIN huesped h ON rh.id_huesped = h.id_huesped
+WHERE r.id_reserva = 1; -- Cambia el 1 por el ID de la reserva que te interese
+
+CREATE SEQUENCE id_huesped_seq START WITH 3;
 ALTER TABLE huesped ALTER COLUMN id_huesped SET DEFAULT nextval('id_huesped_seq');
 ALTER SEQUENCE id_huesped_seq OWNED BY huesped.id_huesped;
 
 CREATE TABLE reserva (
-    id_reserva INT PRIMARY KEY,
-    id_huesped INT NOT NULL REFERENCES huesped(id_huesped),
+    id_reserva SERIAL PRIMARY KEY,
+    -- id_huesped INT NOT NULL REFERENCES huesped(id_huesped),
     numero_habitacion INT NOT NULL REFERENCES habitacion(numero_habitacion),
     fecha_checkin DATE,
     fecha_checkout DATE,
-    precio_total DECIMAL(10, 2)
+    precio_total INT
 );
 
 CREATE SEQUENCE reserva_id_reserva_seq;
@@ -86,10 +107,13 @@ INSERT INTO hotel VALUES (1, 'Hotel California', 'Calle 1 # 2-3', '1234567', 'ho
 
 INSERT INTO tipo_habitacion VALUES (1, 'Sencilla', 'Habitación sencilla', 100000, 1);
 INSERT INTO tipo_habitacion VALUES (2, 'Doble', 'Habitación doble', 150000, 2);
+INSERT INTO tipo_habitacion (nombre, descripcion, precio, capacidad) VALUES ('Triple', 'Habitación triple', 200000, 3);
 
 INSERT INTO habitacion VALUES (1, 1, 1, 'Disponible');
 INSERT INTO habitacion VALUES (2, 1, 1, 'Disponible');
 INSERT INTO habitacion VALUES (3, 1, 2, 'Disponible');
+
+-- select from reserva nombre tipo_habitacion
 
 -- INSERT INTO Habitacion (numero_habitacion, id_hotel, id_tipo_habitacion, estado) VALUES (4, 1, 2, 'Disponible');
 

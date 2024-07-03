@@ -15,11 +15,6 @@ const page = () => {
   const [precio, setPrecio] = useState("");
   const [capacidad, setCapacidad] = useState("");
 
-  const [numeroHabitacion, setNumeroHabitacion] = useState("");
-  const [fechaIngreso, setFechaIngreso] = useState("");
-  const [fechaSalida, setFechaSalida] = useState("");
-  const [precioTotal, setPrecioTotal] = useState("");
-
   useEffect(() => {
     fetch("/api/tipoHabitacion")
       .then((res) => res.json())
@@ -27,7 +22,7 @@ const page = () => {
   }, []);
 
   useEffect(() => {
-    fetch("/api/reserva")
+    fetch("/api/tiposdehabitacion")
       .then((res) => res.json())
       .then((data) => setRooms(data));
   }, []);
@@ -76,7 +71,7 @@ const page = () => {
     <Layout>
       <Container>
         <h1 className="text-3xl lg:text-5xl font-bold text-center my-8">
-          Agregar Reserva
+          Agregar tipos de habitacion
         </h1>
         <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
           <div className="relative z-0 w-full mb-5 group">
@@ -86,51 +81,33 @@ const page = () => {
               id="numeroHabitacion"
               className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=""
-              value={numeroHabitacion}
-              onChange={(e) => setNumeroHabitacion(e.target.value)}
+              value={nombre}
+              onChange={(e) => setNombre(e.target.value)}
               required
             />
             <label
               htmlFor="numeroHabitacion"
               className="peer-focus:font-medium absolute text-sm text-gray-950 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              Numero habitacion
+              Nombre
             </label>
           </div>
           <div className="relative z-0 w-full mb-5 group">
             <input
-              type="date"
+              type="text"
               name="numeroHabitacion"
               id="numeroHabitacion"
               className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=""
-              value={fechaIngreso}
-              onChange={(e) => setFechaIngreso(e.target.value)}
+              value={descripcion}
+              onChange={(e) => setDescripcion(e.target.value)}
               required
             />
             <label
               htmlFor="numeroHabitacion"
               className="peer-focus:font-medium absolute text-sm text-gray-950 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              Fecha Ingreso
-            </label>
-          </div>
-          <div className="relative z-0 w-full mb-5 group">
-            <input
-              type="date"
-              name="numeroHabitacion"
-              id="numeroHabitacion"
-              className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=""
-              value={fechaSalida}
-              onChange={(e) => setFechaSalida(e.target.value)}
-              required
-            />
-            <label
-              htmlFor="numeroHabitacion"
-              className="peer-focus:font-medium absolute text-sm text-gray-950 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
-              Fecha Salida
+              Descripcion
             </label>
           </div>
           <div className="relative z-0 w-full mb-5 group">
@@ -140,15 +117,33 @@ const page = () => {
               id="numeroHabitacion"
               className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=""
-              value={precioTotal}
-              onChange={(e) => setPrecioTotal(e.target.value)}
+              value={precio}
+              onChange={(e) => setPrecio(e.target.value)}
               required
             />
             <label
               htmlFor="numeroHabitacion"
               className="peer-focus:font-medium absolute text-sm text-gray-950 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              Precio Total
+              Precio
+            </label>
+          </div>
+          <div className="relative z-0 w-full mb-5 group">
+            <input
+              type="number"
+              name="numeroHabitacion"
+              id="numeroHabitacion"
+              className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=""
+              value={capacidad}
+              onChange={(e) => setCapacidad(e.target.value)}
+              required
+            />
+            <label
+              htmlFor="numeroHabitacion"
+              className="peer-focus:font-medium absolute text-sm text-gray-950 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
+              Capacidad
             </label>
           </div>
           <div className="flex justify-between">
@@ -168,19 +163,16 @@ const page = () => {
               <thead className="text-xs dark:text-white uppercase bg-secondary">
                 <tr>
                   <th scope="col" className="px-6 py-3">
-                    Numero Habitacion
+                    Nombre
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Tipo Habitacion
+                    Descripcion
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Fecha Ingreso
+                    Precio
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Fecha Salida
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Precio Total
+                    Capacidad
                   </th>
                   <th scope="col" className="px-6 py-3">
                     Editar
@@ -191,22 +183,20 @@ const page = () => {
                 </tr>
               </thead>
               <tbody>
-              {/* id_reserva | numero_habitacion | fecha_checkin | fecha_checkout | precio_total */}
                 {rooms.map((room) => (
                   <tr
-                    key={room.id_reserva}
+                    key={room.id_tipo_habitacion}
                     className="odd:bg-white even:bg-gray-50"
                   >
                     <th
                       scope="row"
                       className="px-6 py-4 font-medium  whitespace-nowrap"
                     >
-                      {room.numero_habitacion}
+                      {room.nombre}
                     </th>
-                    <td className="px-6 py-4">{room.nombre}</td>
-                    <td className="px-6 py-4">{new Date(room.fecha_checkin).toLocaleDateString('es-ES')}</td>
-                    <td className="px-6 py-4">{new Date(room.fecha_checkout).toLocaleDateString('es-ES')}</td>
-                    <td className="px-6 py-4">{room.precio_total}</td>
+                    <td className="px-6 py-4">{room.descripcion}</td>
+                    <td className="px-6 py-4">{formatToClp(room.precio)}</td>
+                    <td className="px-6 py-4">{room.capacidad}</td>
                     <td className="px-6 py-4">
                       <button onClick={() => updateProduct(room.id)}>
                         <EditIcon className="w-5 fill-text" />

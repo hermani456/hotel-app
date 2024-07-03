@@ -50,7 +50,12 @@ const page = () => {
       },
       body: JSON.stringify(newRoom),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 409) {
+          alert("Numero de habitación ya existe");
+        }
+        return res.json();
+      })
       .then((data) => {
         // setRooms((prevRooms) => [...prevRooms, data]);
         setNumeroHabitacion("");
@@ -59,6 +64,31 @@ const page = () => {
         setEstado("Disponible");
       });
   };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const newRoom = {
+  //     numeroHabitacion,
+  //     hotel,
+  //     tipoHabitacion,
+  //     estado,
+  //   };
+  //   setSubmissionCount((prevCount) => prevCount + 1);
+  //   fetch("/api/habitacion", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(newRoom),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       // setRooms((prevRooms) => [...prevRooms, data]);
+  //       setNumeroHabitacion("");
+  //       setHotel("1");
+  //       setTipoHabitacion("");
+  //       setEstado("Disponible");
+  //     });
+  // };
 
   const handleDelete = (id) => {
     console.log("id", id);
@@ -163,7 +193,7 @@ const page = () => {
         </form>
         {rooms.length === 0 ? (
           <h2 className="text-2xl font-bold text-text text-center mt-5">
-            No hay productos disponibles
+            No hay habitaciones disponibles
           </h2>
         ) : (
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
@@ -219,7 +249,9 @@ const page = () => {
                       </button>
                     </td>
                     <td className="px-6 py-4">
-                      <button onClick={() => handleDelete(room.numero_habitacion)}>
+                      <button
+                        onClick={() => handleDelete(room.numero_habitacion)}
+                      >
                         <DeleteIcon className="w-5 fill-red-600" />
                       </button>
                     </td>
