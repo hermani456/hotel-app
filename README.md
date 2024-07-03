@@ -42,19 +42,6 @@ A continuación se detallan las variables de entorno configuradas en el archivo 
 - `PGPASSWORD`: Contraseña para el usuario de la base de datos PostgreSQL. Ejemplo: `***************`.
 - `PGPORT`: Puerto para la conexión a la base de datos PostgreSQL. Ejemplo: `*****`.
 
-### Inicialización de la Base de Datos
-
-Antes de poder ejecutar la aplicación, necesitas crear la base de datos que especificaste en tu archivo `.env` y aplicar las migraciones o el esquema inicial. Si estás utilizando Prisma, por ejemplo, puedes hacerlo con:
-
-```bash
-npx prisma migrate dev
-```
-
-Si necesitas crear manualmente la base de datos, puedes hacerlo con el siguiente comando de PostgreSQL:
-
-```bash
-createdb -U <usuario> <nombre_de_la_base_de_datos>
-```
 
 ### Ejecución del Proyecto
 
