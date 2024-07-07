@@ -4,12 +4,13 @@
 
 ### Requisitos Previos
 
-Asegúrate de tener instalado:
+Asegúrate de tener:
 
 - Node.js (recomendamos la última versión LTS)
 - npm (viene con Node.js)
 - PostgreSQL
 - Git
+- Una cuenta en [Clerk](https://clerk.com)
 
 ### Instalación de Node.js y npm
 
@@ -183,6 +184,53 @@ CREATE DATABASE hotel;
 ```sql
 INSERT INTO hotel VALUES (1, 'Hotel Duerme Bien', 'Calle 1 # 2-3', '1234567', 'hotel@hotel.cl');
 ```
+
+### Configuración de Clerk
+
+1. **Crear una cuenta en Clerk**
+   - Visita [Clerk](https://clerk.com) y crea una cuenta si aún no tienes una.
+   - Una vez creada la cuenta, configura tu primer proyecto siguiendo las instrucciones de la plataforma.
+
+2. **Configurar Organización y Roles**
+   - En el panel de administración de Clerk, navega a la sección de "Organizaciones".
+   - Crea una nueva organización.
+   - Dentro de la organización, crea dos roles: `admin` y `empleado`.
+
+3. **Obtener las Claves del Proyecto**
+   - Desde el panel de configuración de tu proyecto en Clerk, extrae `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` y `CLERK_SECRET_KEY`.
+
+4. **Agregar Claves al Archivo `.env.local`**
+   - Abre el archivo `.env.local` en el directorio de tu proyecto.
+   - Añade las claves obtenidas de Clerk como se muestra a continuación:
+     ```env
+     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=tu_clave_publicable
+     CLERK_SECRET_KEY=tu_clave_secreta
+     ```
+
+5. **Configurar Método de Inicio de Sesión**
+   - En el panel de administración de Clerk, selecciona la configuración de tu proyecto.
+   - Elige el método de inicio de sesión mediante "Email y Contraseña".
+
+6. **Crear Usuarios y Asignar Roles**
+   - Ve a la sección de "Usuarios" en el panel de administración de Clerk.
+   - Crea las siguientes cuentas de usuario:
+     - **admin@duermebien.cl** con el rol `admin`
+     - **empleado@duermebien.cl** con el rol `empleado`
+   - Asigna cada usuario a su respectivo rol dentro de la organización.
+   - Para cada usuario, añade la metadata insegura (unsafe metadata) con los siguientes valores:
+     - Para `admin@duermebien.cl`:
+```json
+{
+  "role": "admin"
+}
+```
+     - Para `empleado@duermebien.cl`:
+```json
+{
+  "role": "empleado"
+}
+```
+
 
 ### Configuración del Entorno
 
