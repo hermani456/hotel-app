@@ -189,7 +189,7 @@ INSERT INTO hotel VALUES (1, 'Hotel Duerme Bien', 'Calle 1 # 2-3', '1234567', 'h
 1. Clona el repositorio del proyecto desde GitHub:
 
 ```bash
-git clone --branch now --single-branch  https://github.com/hermani456/hotel-app.git
+git clone --branch now --single-branch https://github.com/hermani456/hotel-app.git
 cd hotel-app
 ```
 
