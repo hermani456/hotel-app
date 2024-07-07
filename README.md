@@ -98,7 +98,7 @@ CREATE DATABASE hotel;
 4. Crea las tablas necesarias:
 
 ```sql
-CREATE TABLE hotel (
+    CREATE TABLE hotel (
        id_hotel INT PRIMARY KEY,
        nombre VARCHAR(255),
        direccion VARCHAR(255),
