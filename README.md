@@ -1,4 +1,4 @@
-# Proyecto Hotel California
+# Proyecto Hotel Duerme Bien
 
 ## Instalación y Ejecución del Proyecto
 
@@ -10,50 +10,117 @@ Asegúrate de tener instalado:
 - npm (viene con Node.js)
 - PostgreSQL
 
+### Instalación de Node.js y npm
+
+#### Windows
+
+1. Descarga el instalador de Node.js desde la [página oficial](https://nodejs.org/).
+2. Ejecuta el instalador y sigue las instrucciones en pantalla.
+3. Verifica la instalación abriendo una terminal y ejecutando:
+
+    ```bash
+    node -v
+    npm -v
+    ```
+
+#### Linux
+
+Para distribuciones basadas en Debian/Ubuntu:
+
+    ```bash
+    sudo apt update
+    sudo apt install nodejs npm
+    ```
+
+Para distribuciones basadas en Red Hat/Fedora:
+
+    ```bash
+    sudo dnf install nodejs npm
+    ```
+
+Verifica la instalación ejecutando:
+
+    ```bash
+    node -v
+    npm -v
+    ```
+
+### Instalación de PostgreSQL
+
+#### Windows
+
+1. Descarga el instalador de PostgreSQL desde la [página oficial](https://www.postgresql.org/download/windows/).
+2. Ejecuta el instalador y sigue las instrucciones en pantalla.
+3. Durante la instalación, toma nota del puerto, el nombre de usuario y la contraseña configurados.
+
+#### Linux
+
+Para distribuciones basadas en Debian/Ubuntu:
+
+    ```bash
+    sudo apt update
+    sudo apt install postgresql postgresql-contrib
+    ```
+
+Para distribuciones basadas en Red Hat/Fedora:
+
+    ```bash
+    sudo dnf install postgresql-server postgresql-contrib
+    ```
+
+Inicia el servicio de PostgreSQL:
+
+    ```bash
+    sudo systemctl start postgresql
+    sudo systemctl enable postgresql
+    ```
+
 ### Configuración del Entorno
 
-1. Clona el repositorio del proyecto:
+1. Clona el repositorio del proyecto desde GitHub:
 
-```markdown
-git clone <URL_DEL_REPOSITORIO>
-cd <NOMBRE_DEL_DIRECTORIO_DEL_PROYECTO>
-```
-
+    ```bash
+    git clone <URL_DEL_REPOSITORIO>
+    cd <NOMBRE_DEL_DIRECTORIO_DEL_PROYECTO>
+    ```
 
 2. Instala las dependencias del proyecto ejecutando el siguiente comando en tu terminal:
 
-```bash
-npm install
-```
+    ```bash
+    npm install
+    ```
 
 3. Configura las variables de entorno necesarias para tu aplicación. Esto incluye las credenciales de tu base de datos PostgreSQL y cualquier otra configuración específica del entorno. Crea un archivo `.env.local` en la raíz de tu proyecto y añade las siguientes variables (ajusta los valores según tu configuración de PostgreSQL):
 
-## Configuración de `.env.local`
+#### Configuración de `.env.local`
 
 A continuación se detallan las variables de entorno configuradas en el archivo `.env.local`:
 
-- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`: Clave pública de Clerk, utilizada para la autenticación y configuración del frontend. Ejemplo: `pk_test_***************`.
-- `CLERK_SECRET_KEY`: Clave secreta de Clerk, utilizada en el backend para autenticación y operaciones seguras. Ejemplo: `sk_test_***************`.
-- `NEXT_PUBLIC_CLERK_SIGN_IN_URL`: URL para la página de inicio de sesión. Ejemplo: `/sign-in`.
-- `NEXT_PUBLIC_CLERK_SIGN_UP_URL`: URL para la página de registro. Ejemplo: `/sign-up`.
-- `PGUSER`: Usuario de PostgreSQL. Ejemplo: `postgres`.
-- `PGHOST`: Host de la base de datos PostgreSQL. Ejemplo: `***************`.
-- `PGDATABASE`: Nombre de la base de datos PostgreSQL. Ejemplo: `hotel`.
-- `PGPASSWORD`: Contraseña para el usuario de la base de datos PostgreSQL. Ejemplo: `***************`.
-- `PGPORT`: Puerto para la conexión a la base de datos PostgreSQL. Ejemplo: `*****`.
-
+    ```env
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_***************
+    CLERK_SECRET_KEY=sk_test_***************
+    NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+    NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+    PGUSER=postgres
+    PGHOST=localhost
+    PGDATABASE=hotel
+    PGPASSWORD=***************
+    PGPORT=5432
+    ```
 
 ### Ejecución del Proyecto
 
 Una vez configurado el entorno y la base de datos, puedes iniciar el servidor de desarrollo con:
 
-```bash
-npm run dev
-```
+    ```bash
+    npm run dev
+    ```
 
 Esto iniciará tu aplicación en `http://localhost:3000`, donde podrás acceder a ella desde tu navegador.
 
-### Test de Aplicacion Web
+### Test de Aplicación Web
 
-- Prueba la aplicacion Ingresando a:
-[Hotel California App](https://hotel-app-production-104f.up.railway.app/)
+Prueba la aplicación ingresando a: [Hotel Duerme Bien](https://hotel-app-production-104f.up.railway.app/)
+
+---
+
