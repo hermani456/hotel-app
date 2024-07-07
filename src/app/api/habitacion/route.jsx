@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
   const body = await req.json();
   const { numeroHabitacion, hotel, tipoHabitacion, estado } = body;
+  console.log(numeroHabitacion, hotel, tipoHabitacion, estado)
   try {
     const data = await pool.query(
       "INSERT INTO habitacion (numero_habitacion, id_hotel, id_tipo_habitacion, estado) VALUES ($1, $2, $3, $4) RETURNING *",
@@ -32,7 +33,7 @@ export async function POST(req) {
 
 export async function GET() {
   const data = await pool.query(
-    "SELECT numero_habitacion, nombre, descripcion, precio, capacidad, estado FROM habitacion h INNER JOIN tipo_habitacion th ON h.id_tipo_habitacion = th.id_tipo_habitacion;"
+    "SELECT numero_habitacion, nombre, descripcion, capacidad, estado FROM habitacion h INNER JOIN tipo_habitacion th ON h.id_tipo_habitacion = th.id_tipo_habitacion;"
   );
   return NextResponse.json(data.rows);
 }

@@ -10,34 +10,34 @@ const Layout = ({ children }) => {
         <nav>
           <ul className="flex justify-between">
             <li>
-              <Button variant="ghost">
-                <Link href="/">Home</Link>
-              </Button>
+              <Link href="/">
+                <Button variant="ghost">Home</Button>
+              </Link>
             </li>
             <li>
-            <Button variant="ghost">
-                <Link href="/tipohabitacion">Tipos de Habitacion</Link>
-              </Button>
+              <Link href="/tipohabitacion">
+                <Button variant="ghost">Tipos de Habitacion</Button>
+              </Link>
             </li>
             <li>
-              <Button variant="ghost">
-                <Link href="/habitacion">Habitaciones</Link>
-              </Button>
+              <Link href="/habitacion">
+                <Button variant="ghost">Habitaciones</Button>
+              </Link>
             </li>
             <li>
-              <Button variant="ghost">
-                <Link href="/huesped">Huespedes</Link>
-              </Button>
+              <Link href="/huesped">
+                <Button variant="ghost">Huespedes</Button>
+              </Link>
             </li>
             <li>
-              <Button variant="ghost">
-                <Link href="/reserva">Reservas</Link>
-              </Button>
+              <Link href="/reserva">
+                <Button variant="ghost">Reservas</Button>
+              </Link>
             </li>
             <li>
-              <Button variant="ghost">
-                <Link href="/pasajeros">Pasajeros</Link>
-              </Button>
+              <Link href="/pasajeros">
+                <Button variant="ghost">Pasajeros</Button>
+              </Link>
             </li>
           </ul>
         </nav>

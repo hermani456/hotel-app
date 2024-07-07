@@ -4,12 +4,19 @@ import Layout from "../components/Layout";
 import Container from "../components/ui/Container";
 import { Button } from "../components/ui/button";
 import { formatToClp } from "@/utils";
+import { LoaderIcon } from "lucide-react";
 
 const page = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [rooms, setRooms] = useState([]);
   const [nombreHabitacion, setNombreHabitacion] = useState("");
   const [habitacionDisponible, setHabitacionDisponible] = useState([]);
+  const [pasajeros, setPasajeros] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // const [numeroHabitacion, setNumeroHabitacion] = useState("");
+  // const [nombreHabitacion, setNombreHabitacion] = useState("");
+  const [capacidadHabitacion, setCapacidadHabitacion] = useState("");
 
   const [huespedesSeleccionados, setHuespedesSeleccionados] = useState([]);
 
@@ -18,6 +25,17 @@ const page = () => {
       .then((res) => res.json())
       .then((data) => setHabitacionDisponible(data));
   }, []);
+
+  const handleSelectChange = (e) => {
+    const selectedValue = e.target.value;
+    const [numero, nombre, capacidad] = selectedValue.split(",");
+
+    // Update your state here
+    setNumeroHabitacion(numero);
+    // Assuming you have setter functions for the other pieces of information
+    setNombreHabitacion(nombre);
+    setCapacidadHabitacion(capacidad);
+  };
 
   const [numeroHabitacion, setNumeroHabitacion] = useState("");
   const [fechaIngreso, setFechaIngreso] = useState("");
@@ -28,7 +46,9 @@ const page = () => {
 
   const [idReserva, setIdReserva] = useState("");
 
-  const [selectedHuesped, setSelectedHuesped] = useState("");
+  const [selectedHuesped, setSelectedHuesped] = useState(
+    Array(capacidadHabitacion).fill("")
+  );
 
   useEffect(() => {
     fetch("/api/huesped")
@@ -36,46 +56,20 @@ const page = () => {
       .then((data) => setHuespedes(data));
   }, []);
 
-  useEffect(() => {
-    fetch("/api/tipoHabitacion")
-      .then((res) => res.json())
-      .then((data) => setNombreHabitacion(data));
-  }, []);
-
-  const handleSelectHuesped = (event) => {
-    const idHuespedSeleccionado = event.target.value;
-    if (!idHuespedSeleccionado) return; // No hacer nada si el valor es ""
-
-    const huespedSeleccionado = huespedes.find(
-      (huesped) => huesped.id_huesped.toString() === idHuespedSeleccionado
-    );
-    if (!huespedSeleccionado) return; // Verificar que se encontró el huésped
-
-    // Evitar agregar duplicados
-    if (
-      !huespedesSeleccionados.some(
-        (huesped) => huesped.id_huesped === huespedSeleccionado.id
-      )
-    ) {
-      setHuespedesSeleccionados((prev) => [...prev, huespedSeleccionado]);
-    }
+  const handleSelectHuesped = (index, value) => {
+    setSelectedHuesped((prev) => {
+      const newSelected = [...prev];
+      newSelected[index] = value;
+      return newSelected;
+    });
   };
 
-  // Filtrar los huéspedes que no han sido seleccionados
   const huespedesDisponibles = huespedes.filter(
-    (huesped) =>
-      !huespedesSeleccionados.some(
-        (seleccionado) => seleccionado.id_huesped === huesped.id_huesped
-      )
+    (huesped) => !selectedHuesped.includes(huesped.id_huesped)
   );
 
-  // useEffect(() => {
-  //   fetch("/api/reserva")
-  //     .then((res) => res.json())
-  //     .then((data) => setRooms(data));
-  // }, []);
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     const newRoomType = {
       numeroHabitacion,
@@ -84,71 +78,68 @@ const page = () => {
       precioTotal,
     };
     console.log("newRoomType", newRoomType);
-    setRooms((prevRooms) => [...prevRooms, newRoomType]);
-    setNumeroHabitacion("");
-    setFechaIngreso("");
-    setFechaSalida("");
-    setPrecioTotal("");
-    fetch("/api/reserva", {
+
+    const data = await fetch("/api/reserva", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newRoomType),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        const idReserva = data.id_reserva;
-        setIdReserva(idReserva);
-        console.log("idReserva", idReserva);
-      });
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     setRooms((prevRooms) => [...prevRooms, data]);
-    //     setNombre("");
-    //     setDescripcion("");
-    //     setPrecio("");
-    //     setCapacidad("");
-    //   });
-  };
-
-  const handleSubmitToReservaHuesped = () => {
-    if (huespedesSeleccionados.length < habitacionDisponible[0].capacidad) {
-      alert("No hay suficientes huespedes seleccionados")
-      return; // Early return if not enough guests
-    }
-    // console.log(huespedesSeleccionados.length, habitacionDisponible)
-    const data = {
-      id_reserva: idReserva,
-      huespedesSeleccionados: huespedesSeleccionados.map(
-        (huesped) => huesped.id_huesped
-      ),
+    });
+    const response = await data.json();
+    console.log("response", response);
+    const reservaHuespedData = {
+      id_reserva: response.id_reserva,
+      huespedesSeleccionados: selectedHuesped,
     };
-    
-    fetch("/api/reservahuesped", {
+    const dataHuesped = await fetch("/api/reservahuesped", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(reservaHuespedData),
     });
-    setHuespedesSeleccionados([]);
+    const responseHuesped = await dataHuesped.json();
+    console.log("responseHuesped", responseHuesped);
+    if (responseHuesped) {
+      setIsLoading(false);
+      setNumeroHabitacion("");
+      setFechaIngreso("");
+      setFechaSalida("");
+      setPrecioTotal("");
+      setCapacidadHabitacion("");
+      setSelectedHuesped(Array(capacidadHabitacion).fill(""));
+
+      alert("Reserva Agregada con Exito");
+    }
   };
 
-  const handleDelete = (id) => {
-    console.log("id", id);
-    fetch("/api/huesped", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(id),
-    })
-      .then((res) => res.json())
-      .then(() =>
-        setRooms((prevRooms) => prevRooms.filter((r) => r.id_huesped !== id))
-      );
-  };
+
+  const inputs = [];
+
+  for (let i = 0; i < capacidadHabitacion; i++) {
+    inputs.push(
+      <div className="relative z-0 w-full mb-5 group" key={i}>
+        <select
+          className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          onChange={(e) => handleSelectHuesped(i, e.target.value)}
+          value={selectedHuesped[i]}
+          required
+        >
+          <option value="">Seleccione un Huesped</option>
+          {huespedesDisponibles.map((huesped) => (
+            <option
+              className="text-black"
+              key={huesped.id_huesped}
+              value={huesped.id_huesped}
+            >
+              {huesped.nombre + " " + huesped.apellido}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  }
 
   return (
     <Layout>
@@ -161,9 +152,10 @@ const page = () => {
             <select
               name="tipoHabitacion"
               id="tipoHabitacion"
+              placeholder="Tipo Habitacion"
               className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              value={numeroHabitacion}
-              onChange={(e) => setNumeroHabitacion(e.target.value)}
+              value={nombreHabitacion}
+              onChange={handleSelectChange}
               required
             >
               <option value="" disabled>
@@ -174,7 +166,7 @@ const page = () => {
                   <option
                     className="text-black"
                     key={i}
-                    value={[tipo.numero_habitacion, tipo.nombre]}
+                    value={`${tipo.numero_habitacion},${tipo.nombre},${tipo.capacidad}`}
                   >
                     {tipo.nombre}
                   </option>
@@ -241,6 +233,26 @@ const page = () => {
               Precio Total
             </label>
           </div>
+          {/* <div className="relative z-0 w-full mb-5 group">
+            <input
+              type="text"
+              name="pasajeros"
+              id="pasajeros"
+              className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=""
+              value={pasajeros}
+              onChange={(e) => setPasajeros(e.target.value)}
+              required
+            />
+            <label
+              htmlFor="pasajeros"
+              className="peer-focus:font-medium absolute text-sm text-gray-950 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
+              Precio Total
+            </label>
+          </div> */}
+          {inputs}
+
           <div className="flex justify-between">
             <Button type="submit">Agregar</Button>
             {isEditing && (
@@ -248,113 +260,9 @@ const page = () => {
             )}
           </div>
         </form>
-        {rooms.length === 0 ? (
-          <h2 className="text-2xl font-bold text-text text-center mt-5">
-            No hay tipos de reservas disponibles
-          </h2>
-        ) : (
-          <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-              <thead className="text-xs dark:text-white uppercase bg-secondary">
-                <tr>
-                  <th scope="col" className="px-6 py-3">
-                    Numero Habitacion
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Tipo Habitacion
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Fecha Ingreso
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Fecha Salida
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Precio Total
-                  </th>
-                  {/* <th scope="col" className="px-6 py-3">
-                    Editar
-                  </th> */}
-                  <th scope="col" className="px-6 py-3">
-                    Borrar
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {rooms.map((room) => (
-                  <tr
-                    key={room.numeroHabitacion}
-                    className="odd:bg-white even:bg-gray-50"
-                  >
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium  whitespace-nowrap"
-                    >
-                      {room.numeroHabitacion.split(",")[0]}
-                    </th>
-                    <td className="px-6 py-4">
-                      {room.numeroHabitacion.split(",")[1]}
-                    </td>
-                    <td className="px-6 py-4">
-                      {new Date(
-                        room.fechaIngreso + "T12:00:00"
-                      ).toLocaleDateString("es-ES")}
-                    </td>
-                    <td className="px-6 py-4">
-                      {new Date(
-                        room.fechaSalida + "T12:00:00"
-                      ).toLocaleDateString("es-ES")}
-                    </td>
-                    <td className="px-6 py-4">{room.precio_total}</td>
-                    {/* <td className="px-6 py-4">
-                      <button onClick={() => updateProduct(room.id)}>
-                        <EditIcon className="w-5 fill-text" />
-                      </button>
-                    </td> */}
-                    <td className="px-6 py-4">
-                      <button onClick={() => handleDelete(room.id_huesped)}>
-                        <DeleteIcon className="w-5 fill-red-600" />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-        {rooms.length === 0 ? (
-          <div> </div>
-        ) : (
-          <div className="mx-auto">
-            <h2 className="text-2xl font-bold text-text text-center mt-5">
-              agregar huespedes a reserva
-            </h2>
-            <div className="flex flex-col justify-center items-center space-y-5">
-              <select
-                className="border border-gray-300 rounded-md p-2"
-                onChange={handleSelectHuesped}
-                value={selectedHuesped}
-              >
-                <option value="">Seleccione un Huesped</option>
-                {huespedesDisponibles.map((huesped) => (
-                  <option key={huesped.id_huesped} value={huesped.id_huesped}>
-                    {huesped.nombre}
-                  </option>
-                ))}
-              </select>
-
-              <div>
-                <h3>Huespedes Seleccionados:</h3>
-                <ul className="text-center">
-                  {huespedesSeleccionados.map((huesped) =>
-                    huesped ? (
-                      <li key={huesped.id_huesped}>{huesped.nombre}</li>
-                    ) : null
-                  )}
-                </ul>
-              </div>
-              <Button onClick={handleSubmitToReservaHuesped}>Agregar</Button>
-            </div>
+        {isLoading && (
+          <div className="flex justify-center items-center">
+            <LoaderIcon className="animate-spin" />
           </div>
         )}
       </Container>

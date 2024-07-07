@@ -5,7 +5,7 @@ export async function POST(req) {
   const body = await req.json();
   console.log("body", body);
   let { numeroHabitacion, fechaIngreso, fechaSalida, precioTotal } = body;
-  numeroHabitacion = numeroHabitacion.split(",")[0];
+  // numeroHabitacion = numeroHabitacion.split(",")[0];
   // id_reserva | numero_habitacion | fecha_checkin | fecha_checkout | precio_total
   // INSERT INTO reserva (numero_habitacion, fecha_checkin, fecha_checkout, precio_total) VALUES (3, '2021-01-01', '2021-01-03', 400000);
 

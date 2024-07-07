@@ -3,10 +3,10 @@ import { NextResponse } from "next/server";
 
 export async function POST(req) {
   const body = await req.json();
-  const { nombre, descripcion, precio, capacidad } = body;
+  const { nombre, descripcion, capacidad } = body;
   const data = await pool.query(
-    "INSERT INTO tipo_habitacion (nombre, descripcion, precio, capacidad) VALUES ($1, $2, $3, $4) RETURNING *",
-    [nombre, descripcion, precio, capacidad]
+    "INSERT INTO tipo_habitacion (nombre, descripcion, capacidad) VALUES ($1, $2, $3) RETURNING *",
+    [nombre, descripcion, capacidad]
   );
   return NextResponse.json(data.rows[0]);
 }

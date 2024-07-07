@@ -42,10 +42,7 @@ CREATE TABLE huesped (
     id_huesped INT PRIMARY KEY,
     nombre VARCHAR(50),
     apellido VARCHAR(50),
-    fecha_nacimiento DATE,
-    direccion VARCHAR(255),
-    telefono VARCHAR(15),
-    email VARCHAR(255)
+    rut VARCHAR(15),
 );
 
 CREATE TABLE reserva_huesped (

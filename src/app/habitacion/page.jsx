@@ -210,9 +210,6 @@ const page = () => {
                     Descripcion
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Precio
-                  </th>
-                  <th scope="col" className="px-6 py-3">
                     Capacidad
                   </th>
                   <th scope="col" className="px-6 py-3">
@@ -240,7 +237,6 @@ const page = () => {
                     </th>
                     <td className="px-6 py-4">{room.nombre}</td>
                     <td className="px-6 py-4">{room.descripcion}</td>
-                    <td className="px-6 py-4">{formatToClp(room.precio)}</td>
                     <td className="px-6 py-4">{room.capacidad}</td>
                     <td className="px-6 py-4">{room.estado}</td>
                     {/* <td className="px-6 py-4">

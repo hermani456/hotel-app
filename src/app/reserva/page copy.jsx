@@ -4,17 +4,37 @@ import Layout from "../components/Layout";
 import Container from "../components/ui/Container";
 import { Button } from "../components/ui/button";
 import { formatToClp } from "@/utils";
-import { NumericFormat } from "react-number-format";
 
 const page = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [rooms, setRooms] = useState([]);
   const [nombreHabitacion, setNombreHabitacion] = useState("");
+  const [habitacionDisponible, setHabitacionDisponible] = useState([]);
 
-  const [nombre, setNombre] = useState("");
-  const [descripcion, setDescripcion] = useState("");
-  const [precio, setPrecio] = useState("");
-  const [capacidad, setCapacidad] = useState("");
+  const [huespedesSeleccionados, setHuespedesSeleccionados] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/checkhabitacion")
+      .then((res) => res.json())
+      .then((data) => setHabitacionDisponible(data));
+  }, []);
+
+  const [numeroHabitacion, setNumeroHabitacion] = useState("");
+  const [fechaIngreso, setFechaIngreso] = useState("");
+  const [fechaSalida, setFechaSalida] = useState("");
+  const [precioTotal, setPrecioTotal] = useState("");
+
+  const [huespedes, setHuespedes] = useState([]);
+
+  const [idReserva, setIdReserva] = useState("");
+
+  const [selectedHuesped, setSelectedHuesped] = useState("");
+
+  useEffect(() => {
+    fetch("/api/huesped")
+      .then((res) => res.json())
+      .then((data) => setHuespedes(data));
+  }, []);
 
   useEffect(() => {
     fetch("/api/tipoHabitacion")
@@ -22,21 +42,54 @@ const page = () => {
       .then((data) => setNombreHabitacion(data));
   }, []);
 
-  useEffect(() => {
-    fetch("/api/tiposdehabitacion")
-      .then((res) => res.json())
-      .then((data) => setRooms(data));
-  }, []);
+  const handleSelectHuesped = (event) => {
+    const idHuespedSeleccionado = event.target.value;
+    if (!idHuespedSeleccionado) return; // No hacer nada si el valor es ""
+
+    const huespedSeleccionado = huespedes.find(
+      (huesped) => huesped.id_huesped.toString() === idHuespedSeleccionado
+    );
+    if (!huespedSeleccionado) return; // Verificar que se encontró el huésped
+
+    // Evitar agregar duplicados
+    if (
+      !huespedesSeleccionados.some(
+        (huesped) => huesped.id_huesped === huespedSeleccionado.id
+      )
+    ) {
+      setHuespedesSeleccionados((prev) => [...prev, huespedSeleccionado]);
+    }
+  };
+
+  // Filtrar los huéspedes que no han sido seleccionados
+  const huespedesDisponibles = huespedes.filter(
+    (huesped) =>
+      !huespedesSeleccionados.some(
+        (seleccionado) => seleccionado.id_huesped === huesped.id_huesped
+      )
+  );
+
+  // useEffect(() => {
+  //   fetch("/api/reserva")
+  //     .then((res) => res.json())
+  //     .then((data) => setRooms(data));
+  // }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const newRoomType = {
-      nombre,
-      descripcion,
-      precio,
-      capacidad,
+      numeroHabitacion,
+      fechaIngreso,
+      fechaSalida,
+      precioTotal,
     };
-    fetch("/api/tiposdehabitacion", {
+    console.log("newRoomType", newRoomType);
+    setRooms((prevRooms) => [...prevRooms, newRoomType]);
+    setNumeroHabitacion("");
+    setFechaIngreso("");
+    setFechaSalida("");
+    setPrecioTotal("");
+    fetch("/api/reserva", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,128 +98,147 @@ const page = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setRooms((prevRooms) => [...prevRooms, data]);
-        setNombre("");
-        setDescripcion("");
-        setPrecio("");
-        setCapacidad("");
+        const idReserva = data.id_reserva;
+        setIdReserva(idReserva);
+        console.log("idReserva", idReserva);
       });
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setRooms((prevRooms) => [...prevRooms, data]);
+    //     setNombre("");
+    //     setDescripcion("");
+    //     setPrecio("");
+    //     setCapacidad("");
+    //   });
+  };
+
+  const handleSubmitToReservaHuesped = () => {
+    if (huespedesSeleccionados.length < habitacionDisponible[0].capacidad) {
+      alert("No hay suficientes huespedes seleccionados")
+      return; // Early return if not enough guests
+    }
+    // console.log(huespedesSeleccionados.length, habitacionDisponible)
+    const data = {
+      id_reserva: idReserva,
+      huespedesSeleccionados: huespedesSeleccionados.map(
+        (huesped) => huesped.id_huesped
+      ),
+    };
+    
+    fetch("/api/reservahuesped", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    setHuespedesSeleccionados([]);
   };
 
   const handleDelete = (id) => {
-    fetch("/api/tiposdehabitacion", {
+    console.log("id", id);
+    fetch("/api/huesped", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(id),
     })
-      .then((res) => {
-        if (!res.ok) {
-          return res.json().then((data) => {
-            alert(data.error);
-            return Promise.reject(data.error);
-          });
-        }
-        return res.json();
-      })
-      .then(() => {
-        setRooms((prevRooms) =>
-          prevRooms.filter((r) => r.id_tipo_habitacion !== id)
-        );
-      })
-      .catch((error) => {
-        console.error("Deletion failed:", error);
-      });
+      .then((res) => res.json())
+      .then(() =>
+        setRooms((prevRooms) => prevRooms.filter((r) => r.id_huesped !== id))
+      );
   };
 
   return (
     <Layout>
       <Container>
         <h1 className="text-3xl lg:text-5xl font-bold text-center my-8">
-          Agregar tipos de habitacion
+          Agregar Reserva
         </h1>
         <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
           <div className="relative z-0 w-full mb-5 group">
-            <input
-              type="text"
-              name="numeroHabitacion"
-              id="numeroHabitacion"
-              className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=""
-              value={nombre}
-              onChange={(e) => setNombre(e.target.value)}
+            <select
+              name="tipoHabitacion"
+              id="tipoHabitacion"
+              className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              value={numeroHabitacion}
+              onChange={(e) => setNumeroHabitacion(e.target.value)}
               required
-            />
+            >
+              <option value="" disabled>
+                Selecione Tipo Habitacion
+              </option>
+              {habitacionDisponible &&
+                habitacionDisponible.map((tipo, i) => (
+                  <option
+                    className="text-black"
+                    key={i}
+                    value={[tipo.numero_habitacion, tipo.nombre]}
+                  >
+                    {tipo.nombre}
+                  </option>
+                ))}
+            </select>
             <label
               htmlFor="numeroHabitacion"
               className="peer-focus:font-medium absolute text-sm text-gray-950 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              Nombre
+              Tipo Habitacion
             </label>
           </div>
           <div className="relative z-0 w-full mb-5 group">
             <input
-              type="text"
+              type="date"
               name="numeroHabitacion"
               id="numeroHabitacion"
               className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=""
-              value={descripcion}
-              onChange={(e) => setDescripcion(e.target.value)}
+              value={fechaIngreso}
+              onChange={(e) => setFechaIngreso(e.target.value)}
               required
             />
             <label
               htmlFor="numeroHabitacion"
               className="peer-focus:font-medium absolute text-sm text-gray-950 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              Descripcion
+              Fecha Ingreso
             </label>
           </div>
-          {/* <div className="relative z-0 w-full mb-5 group">
+          <div className="relative z-0 w-full mb-5 group">
+            <input
+              type="date"
+              name="numeroHabitacion"
+              id="numeroHabitacion"
+              className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=""
+              value={fechaSalida}
+              onChange={(e) => setFechaSalida(e.target.value)}
+              required
+            />
+            <label
+              htmlFor="numeroHabitacion"
+              className="peer-focus:font-medium absolute text-sm text-gray-950 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
+              Fecha Salida
+            </label>
+          </div>
+          <div className="relative z-0 w-full mb-5 group">
             <input
               type="number"
               name="numeroHabitacion"
               id="numeroHabitacion"
               className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=""
-              value={precio}
-              onChange={(e) => setPrecio(e.target.value)}
-              required
-            />
-            <NumericFormat
-              className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              value={precio}
-              onValueChange={({ value }) => setPrecio(value)}
-              decimalSeparator=","
-              thousandSeparator="."
-              placeholder=""
-              prefix="$"
+              value={precioTotal}
+              onChange={(e) => setPrecioTotal(e.target.value)}
               required
             />
             <label
               htmlFor="numeroHabitacion"
               className="peer-focus:font-medium absolute text-sm text-gray-950 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              Precio
-            </label>
-          </div> */}
-          <div className="relative z-0 w-full mb-5 group">
-            <input
-              type="number"
-              name="numeroHabitacion"
-              id="numeroHabitacion"
-              className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=""
-              value={capacidad}
-              onChange={(e) => setCapacidad(e.target.value)}
-              required
-            />
-            <label
-              htmlFor="numeroHabitacion"
-              className="peer-focus:font-medium absolute text-sm text-gray-950 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
-              Capacidad
+              Precio Total
             </label>
           </div>
           <div className="flex justify-between">
@@ -178,7 +250,7 @@ const page = () => {
         </form>
         {rooms.length === 0 ? (
           <h2 className="text-2xl font-bold text-text text-center mt-5">
-            No hay tipos de habitaciones disponibles
+            No hay tipos de reservas disponibles
           </h2>
         ) : (
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
@@ -186,14 +258,23 @@ const page = () => {
               <thead className="text-xs dark:text-white uppercase bg-secondary">
                 <tr>
                   <th scope="col" className="px-6 py-3">
-                    Nombre
+                    Numero Habitacion
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Descripcion
+                    Tipo Habitacion
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Capacidad
+                    Fecha Ingreso
                   </th>
+                  <th scope="col" className="px-6 py-3">
+                    Fecha Salida
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Precio Total
+                  </th>
+                  {/* <th scope="col" className="px-6 py-3">
+                    Editar
+                  </th> */}
                   <th scope="col" className="px-6 py-3">
                     Borrar
                   </th>
@@ -202,26 +283,36 @@ const page = () => {
               <tbody>
                 {rooms.map((room) => (
                   <tr
-                    key={room.id_tipo_habitacion}
+                    key={room.numeroHabitacion}
                     className="odd:bg-white even:bg-gray-50"
                   >
                     <th
                       scope="row"
                       className="px-6 py-4 font-medium  whitespace-nowrap"
                     >
-                      {room.nombre}
+                      {room.numeroHabitacion.split(",")[0]}
                     </th>
-                    <td className="px-6 py-4">{room.descripcion}</td>
-                    <td className="px-6 py-4">{room.capacidad}</td>
+                    <td className="px-6 py-4">
+                      {room.numeroHabitacion.split(",")[1]}
+                    </td>
+                    <td className="px-6 py-4">
+                      {new Date(
+                        room.fechaIngreso + "T12:00:00"
+                      ).toLocaleDateString("es-ES")}
+                    </td>
+                    <td className="px-6 py-4">
+                      {new Date(
+                        room.fechaSalida + "T12:00:00"
+                      ).toLocaleDateString("es-ES")}
+                    </td>
+                    <td className="px-6 py-4">{room.precio_total}</td>
                     {/* <td className="px-6 py-4">
                       <button onClick={() => updateProduct(room.id)}>
                         <EditIcon className="w-5 fill-text" />
                       </button>
                     </td> */}
                     <td className="px-6 py-4">
-                      <button
-                        onClick={() => handleDelete(room.id_tipo_habitacion)}
-                      >
+                      <button onClick={() => handleDelete(room.id_huesped)}>
                         <DeleteIcon className="w-5 fill-red-600" />
                       </button>
                     </td>
@@ -229,6 +320,41 @@ const page = () => {
                 ))}
               </tbody>
             </table>
+          </div>
+        )}
+        {rooms.length === 0 ? (
+          <div> </div>
+        ) : (
+          <div className="mx-auto">
+            <h2 className="text-2xl font-bold text-text text-center mt-5">
+              agregar huespedes a reserva
+            </h2>
+            <div className="flex flex-col justify-center items-center space-y-5">
+              <select
+                className="border border-gray-300 rounded-md p-2"
+                onChange={handleSelectHuesped}
+                value={selectedHuesped}
+              >
+                <option value="">Seleccione un Huesped</option>
+                {huespedesDisponibles.map((huesped) => (
+                  <option key={huesped.id_huesped} value={huesped.id_huesped}>
+                    {huesped.nombre}
+                  </option>
+                ))}
+              </select>
+
+              <div>
+                <h3>Huespedes Seleccionados:</h3>
+                <ul className="text-center">
+                  {huespedesSeleccionados.map((huesped) =>
+                    huesped ? (
+                      <li key={huesped.id_huesped}>{huesped.nombre}</li>
+                    ) : null
+                  )}
+                </ul>
+              </div>
+              <Button onClick={handleSubmitToReservaHuesped}>Agregar</Button>
+            </div>
           </div>
         )}
       </Container>

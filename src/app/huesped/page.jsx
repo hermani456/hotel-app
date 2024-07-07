@@ -15,6 +15,7 @@ const page = () => {
   const [direccion, setDireccion] = useState("");
   const [telefono, setTelefono] = useState("");
   const [email, setEmail] = useState("");
+  const [rut, setRut] = useState("");
 
   useEffect(() => {
     fetch("/api/tipoHabitacion")
@@ -33,9 +34,7 @@ const page = () => {
     const newHuesped = {
       nombre,
       apellido,
-      direccion,
-      telefono,
-      email,
+      rut,
     };
     // setSubmissionCount((prevCount) => prevCount + 1);
     fetch("/api/huesped", {
@@ -119,18 +118,18 @@ const page = () => {
               id="numeroHabitacion"
               className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=""
-              value={direccion}
-              onChange={(e) => setDireccion(e.target.value)}
+              value={rut}
+              onChange={(e) => setRut(e.target.value)}
               required
             />
             <label
               htmlFor="numeroHabitacion"
               className="peer-focus:font-medium absolute text-sm text-gray-950 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              Direccion
+              RUT
             </label>
           </div>
-          <div className="relative z-0 w-full mb-5 group">
+          {/* <div className="relative z-0 w-full mb-5 group">
             <input
               type="number"
               name="numeroHabitacion"
@@ -165,7 +164,7 @@ const page = () => {
             >
               email
             </label>
-          </div>
+          </div> */}
           <div className="flex justify-between">
             <Button type="submit">Agregar</Button>
             {isEditing && (
@@ -189,17 +188,8 @@ const page = () => {
                     Apellido
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Direccion
+                    RUT
                   </th>
-                  <th scope="col" className="px-6 py-3">
-                    Telefono
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    email
-                  </th>
-                  {/* <th scope="col" className="px-6 py-3">
-                    Editar
-                  </th> */}
                   <th scope="col" className="px-6 py-3">
                     Borrar
                   </th>
@@ -219,9 +209,7 @@ const page = () => {
                       {room.nombre}
                     </th>
                     <td className="px-6 py-4">{room.apellido}</td>
-                    <td className="px-6 py-4">{room.direccion}</td>
-                    <td className="px-6 py-4">{room.telefono}</td>
-                    <td className="px-6 py-4">{room.email}</td>
+                    <td className="px-6 py-4">{room.rut}</td>
                     {/* <td className="px-6 py-4">
                       <button onClick={() => updateProduct(room.id)}>
                         <EditIcon className="w-5 fill-text" />
