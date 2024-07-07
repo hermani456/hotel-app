@@ -75,6 +75,81 @@ sudo systemctl start postgresql
 sudo systemctl enable postgresql
 ```
 
+### Configuración de la Base de Datos
+
+1. Conéctate a PostgreSQL:
+
+```bash
+psql -U postgres
+```
+
+2. Crea la base de datos `hotel`:
+
+```sql
+CREATE DATABASE hotel;
+```
+
+3. Conéctate a la base de datos `hotel`:
+
+```sql
+\c hotel;
+```
+
+4. Crea las tablas necesarias:
+
+```sql
+CREATE TABLE hotel (
+       id_hotel INT PRIMARY KEY,
+       nombre VARCHAR(255),
+       direccion VARCHAR(255),
+       telefono VARCHAR(15),
+       email VARCHAR(255)
+   );
+
+   CREATE TABLE tipo_habitacion (
+       id_tipo_habitacion SERIAL PRIMARY KEY,
+       nombre VARCHAR(50),
+       descripcion VARCHAR(255),
+       capacidad INT
+   );
+
+   CREATE TABLE habitacion (
+       numero_habitacion INT PRIMARY KEY,
+       id_hotel INT NOT NULL REFERENCES hotel(id_hotel),
+       id_tipo_habitacion INT NOT NULL REFERENCES tipo_habitacion(id_tipo_habitacion),
+       estado VARCHAR(20)
+   );
+
+   CREATE TABLE huesped (
+       id_huesped SERIAL PRIMARY KEY,
+       nombre VARCHAR(50),
+       apellido VARCHAR(50),
+       rut VARCHAR(15)
+   );
+
+   CREATE TABLE reserva (
+       id_reserva SERIAL PRIMARY KEY,
+       numero_habitacion INT NOT NULL REFERENCES habitacion(numero_habitacion),
+       fecha_checkin DATE,
+       fecha_checkout DATE,
+       precio_total INT
+   );
+
+   CREATE TABLE reserva_huesped (
+       id_reserva INT NOT NULL,
+       id_huesped INT NOT NULL,
+       PRIMARY KEY (id_reserva, id_huesped),
+       FOREIGN KEY (id_reserva) REFERENCES reserva(id_reserva),
+       FOREIGN KEY (id_huesped) REFERENCES huesped(id_huesped)
+   );
+```
+
+5. Inserta un registro en la tabla `hotel`:
+
+```sql
+INSERT INTO hotel VALUES (1, 'Hotel Duerme Bien', 'Calle 1 # 2-3', '1234567', 'hotel@hotel.cl');
+```
+
 ### Configuración del Entorno
 
 1. Clona el repositorio del proyecto desde GitHub:
@@ -123,4 +198,3 @@ Esto iniciará tu aplicación en `http://localhost:3000`, donde podrás acceder 
 Prueba la aplicación ingresando a: [Hotel Duerme Bien](https://hotel-app-production-104f.up.railway.app/)
 
 ---
-
