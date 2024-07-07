@@ -18,10 +18,10 @@ Asegúrate de tener instalado:
 2. Ejecuta el instalador y sigue las instrucciones en pantalla.
 3. Verifica la instalación abriendo una terminal y ejecutando:
 
-    ```bash
-    node -v
-    npm -v
-    ```
+```bash
+node -v
+npm -v
+```
 
 #### Linux
 
@@ -34,16 +34,16 @@ sudo apt install nodejs npm
 
 Para distribuciones basadas en Red Hat/Fedora:
 
-    ```bash
-    sudo dnf install nodejs npm
-    ```
+```bash
+sudo dnf install nodejs npm
+```
 
 Verifica la instalación ejecutando:
 
-    ```bash
-    node -v
-    npm -v
-    ```
+```bash
+node -v
+npm -v
+```
 
 ### Instalación de PostgreSQL
 
@@ -57,38 +57,38 @@ Verifica la instalación ejecutando:
 
 Para distribuciones basadas en Debian/Ubuntu:
 
-    ```bash
-    sudo apt update
-    sudo apt install postgresql postgresql-contrib
-    ```
+```bash
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+```
 
 Para distribuciones basadas en Red Hat/Fedora:
 
-    ```bash
-    sudo dnf install postgresql-server postgresql-contrib
-    ```
+```bash
+sudo dnf install postgresql-server postgresql-contrib
+```
 
 Inicia el servicio de PostgreSQL:
 
-    ```bash
-    sudo systemctl start postgresql
-    sudo systemctl enable postgresql
-    ```
+```bash
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
+```
 
 ### Configuración del Entorno
 
 1. Clona el repositorio del proyecto desde GitHub:
 
-    ```bash
-    git clone <URL_DEL_REPOSITORIO>
-    cd <NOMBRE_DEL_DIRECTORIO_DEL_PROYECTO>
-    ```
+```bash
+git clone <URL_DEL_REPOSITORIO>
+cd <NOMBRE_DEL_DIRECTORIO_DEL_PROYECTO>
+```
 
 2. Instala las dependencias del proyecto ejecutando el siguiente comando en tu terminal:
 
-    ```bash
-    npm install
-    ```
+```bash
+npm install
+```
 
 3. Configura las variables de entorno necesarias para tu aplicación. Esto incluye las credenciales de tu base de datos PostgreSQL y cualquier otra configuración específica del entorno. Crea un archivo `.env.local` en la raíz de tu proyecto y añade las siguientes variables (ajusta los valores según tu configuración de PostgreSQL):
 
@@ -96,25 +96,25 @@ Inicia el servicio de PostgreSQL:
 
 A continuación se detallan las variables de entorno configuradas en el archivo `.env.local`:
 
-    ```env
-    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_***************
-    CLERK_SECRET_KEY=sk_test_***************
-    NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-    NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
-    PGUSER=postgres
-    PGHOST=localhost
-    PGDATABASE=hotel
-    PGPASSWORD=***************
-    PGPORT=5432
-    ```
+```env
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_***************
+CLERK_SECRET_KEY=sk_test_***************
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+PGUSER=postgres
+PGHOST=localhost
+PGDATABASE=hotel
+PGPASSWORD=***************
+PGPORT=5432
+```
 
 ### Ejecución del Proyecto
 
 Una vez configurado el entorno y la base de datos, puedes iniciar el servidor de desarrollo con:
 
-    ```bash
-    npm run dev
-    ```
+```bash
+npm run dev
+```
 
 Esto iniciará tu aplicación en `http://localhost:3000`, donde podrás acceder a ella desde tu navegador.
 
