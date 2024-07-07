@@ -218,13 +218,13 @@ INSERT INTO hotel VALUES (1, 'Hotel Duerme Bien', 'Calle 1 # 2-3', '1234567', 'h
      - **empleado@duermebien.cl** con el rol `empleado`
    - Asigna cada usuario a su respectivo rol dentro de la organización.
    - Para cada usuario, añade la metadata insegura (unsafe metadata) con los siguientes valores:
-     - Para `admin@duermebien.cl`:
+- Para `admin@duermebien.cl`:
 ```json
 {
   "role": "admin"
 }
 ```
-     - Para `empleado@duermebien.cl`:
+- Para `empleado@duermebien.cl`:
 ```json
 {
   "role": "empleado"
