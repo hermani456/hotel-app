@@ -9,6 +9,7 @@ Asegúrate de tener instalado:
 - Node.js (recomendamos la última versión LTS)
 - npm (viene con Node.js)
 - PostgreSQL
+- Git
 
 ### Instalación de Node.js y npm
 
@@ -73,6 +74,39 @@ Inicia el servicio de PostgreSQL:
 ```bash
 sudo systemctl start postgresql
 sudo systemctl enable postgresql
+```
+
+### Instalación de Git
+
+#### Windows
+
+1. Descarga el instalador de Git desde la [página oficial](https://git-scm.com/download/win).
+2. Ejecuta el instalador y sigue las instrucciones en pantalla.
+3. Verifica la instalación abriendo una terminal y ejecutando:
+
+```bash
+git --version
+```
+
+#### Linux
+
+Para distribuciones basadas en Debian/Ubuntu:
+
+```bash
+sudo apt update
+sudo apt install git
+```
+
+Para distribuciones basadas en Red Hat/Fedora:
+
+```bash
+sudo dnf install git
+```
+
+Verifica la instalación ejecutando:
+
+```bash
+git --version
 ```
 
 ### Configuración de la Base de Datos
