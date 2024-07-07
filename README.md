@@ -190,10 +190,15 @@ INSERT INTO hotel VALUES (1, 'Hotel Duerme Bien', 'Calle 1 # 2-3', '1234567', 'h
 
 ```bash
 git clone --branch now --single-branch https://github.com/hermani456/hotel-app.git
+```
+
+2. Ingresa a la carpeta del proyecto
+
+```bash
 cd hotel-app
 ```
 
-2. Instala las dependencias del proyecto ejecutando el siguiente comando en tu terminal:
+3. Instala las dependencias del proyecto ejecutando el siguiente comando en tu terminal:
 
 ```bash
 npm install
