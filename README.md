@@ -189,8 +189,8 @@ INSERT INTO hotel VALUES (1, 'Hotel Duerme Bien', 'Calle 1 # 2-3', '1234567', 'h
 1. Clona el repositorio del proyecto desde GitHub:
 
 ```bash
-git clone <URL_DEL_REPOSITORIO>
-cd <NOMBRE_DEL_DIRECTORIO_DEL_PROYECTO>
+git clone --branch now --single-branch  https://github.com/hermani456/hotel-app.git
+cd hotel-app
 ```
 
 2. Instala las dependencias del proyecto ejecutando el siguiente comando en tu terminal:
