@@ -179,7 +179,7 @@ CREATE DATABASE hotel;
    );
 ```
 
-5. Inserta esta funcion y su triger respectivo. Cada vez que se inserte una reserva, la habitacion correspondiente cambiara su estado a 'Ocupada'
+5. Inserta esta funcion y su triger respectivo. Cada vez que se inserte una reserva, la habitacion correspondiente cambiara su estado a `Ocupada`
 
 ```sql
 -- Función para actualizar el estado de la habitación
