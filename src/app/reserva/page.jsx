@@ -26,6 +26,12 @@ const page = () => {
       .then((data) => setHabitacionDisponible(data));
   }, []);
 
+  useEffect(() => {
+    fetch("/api/reserva")
+      .then((res) => res.json())
+      .then((data) => setRooms(data));
+  }, []);
+
   const handleSelectChange = (e) => {
     const selectedValue = e.target.value;
     const [numero, nombre, capacidad] = selectedValue.split(",");
@@ -99,6 +105,7 @@ const page = () => {
     if (responseHuesped) {
       setIsLoading(false);
       setNumeroHabitacion("");
+      setNombreHabitacion("");
       setFechaIngreso("");
       setFechaSalida("");
       setPrecioTotal("");
@@ -245,6 +252,75 @@ const page = () => {
           {isLoading && (
             <div className="flex justify-center items-center">
               <LoaderIcon className="animate-spin" />
+            </div>
+          )}
+          <h1 className="text-2xl font-bold text-text text-center mt-5">
+            Resumen de Reserva
+          </h1>
+          {rooms.length === 0 ? (
+            <h2 className="text-2xl font-bold text-text text-center mt-5">
+              No hay Reservas
+            </h2>
+          ) : (
+            <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+              <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+                <thead className="text-xs dark:text-white uppercase bg-secondary">
+                  <tr>
+                    <th scope="col" className="px-6 py-3">
+                      Habitacion
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Numero habitacion
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Fecha Ingreso
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Fecha Salida
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Precio Total
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Borrar
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rooms.map((room, i) => (
+                    <tr
+                      key={room.id_reserva + i}
+                      className="odd:bg-white even:bg-gray-50"
+                    >
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium  whitespace-nowrap"
+                      >
+                        {room.nombre}
+                      </th>
+                      <td className="px-6 py-4">{room.numero_habitacion}</td>
+                      <td className="px-6 py-4">
+                        {new Date(room.fecha_checkin).toLocaleDateString(
+                          "es-CL"
+                        )}
+                      </td>
+                      <td className="px-6 py-4">
+                        {new Date(room.fecha_checkout).toLocaleDateString(
+                          "es-CL"
+                        )}
+                      </td>
+                      <td className="px-6 py-4">{formatToClp(room.precio_total)}</td>
+                      <td className="px-6 py-4">
+                        <button
+                          onClick={() => handleDelete(room.id_reserva)}
+                        >
+                          <DeleteIcon className="w-5 fill-red-600" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           )}
         </Container>

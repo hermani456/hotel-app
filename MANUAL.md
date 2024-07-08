@@ -14,10 +14,10 @@
 
 ## Acceso al Menú Administrador
 
-Para acceder al Menú Administrador, asegúrate de estar logeado con tu cuenta de Google:
+Para acceder al Menú Administrador, asegúrate de estar logeado con tus credenciales (email y contraseña):
 
-1. Desde la esquina superior derecha, haz clic en el botón "Login".
-2. Ingresa tus credenciales de Google para iniciar sesión.
+1. Desde la esquina superior derecha, haz clic en el botón "Sign In".
+2. Ingresa tus credenciales para iniciar sesión.
 3. Una vez logeado, selecciona "Admin" en el menú para acceder a las funciones de administración.
 
 ## Tipos de Habitación
