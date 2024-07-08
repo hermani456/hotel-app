@@ -14,11 +14,21 @@
 
 ## Acceso al Menú Administrador
 
-Para acceder al Menú Administrador, asegúrate de estar logeado con tus credenciales (email y contraseña):
+Para acceder al Menú Administrador, asegúrate de estar logueado con tus credenciales (email y contraseña):
 
 1. Desde la esquina superior derecha, haz clic en el botón "Sign In".
+![alt text](https://raw.githubusercontent.com/hermani456/hotel-app/now/MarkDownImages/login.png "Logo Title Text 1")
 2. Ingresa tus credenciales para iniciar sesión.
-3. Una vez logeado, selecciona "Admin" en el menú para acceder a las funciones de administración.
+3. Una vez logueado, selecciona "Admin" en el menú para acceder a las funciones de administración.
+
+
+### Administrar tu Cuenta
+
+Cuando estés logueado, podrás administrar tu cuenta haciendo clic en el avatar que aparece en la esquina superior derecha. Aquí podrás:
+
+- Cambiar la imagen de tu avatar.
+- Actualizar tu contraseña.
+- Ver el historial de tus sesiones, incluyendo las direcciones IP desde donde se realizaron los inicios de sesión.
 
 ## Tipos de Habitación
 
