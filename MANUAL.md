@@ -17,18 +17,11 @@
 Para acceder al Menú Administrador, asegúrate de estar logueado con tus credenciales (email y contraseña):
 
 1. Desde la esquina superior derecha, haz clic en el botón "Sign In".
-![alt text](https://raw.githubusercontent.com/hermani456/hotel-app/now/MarkDownImages/login.png "Logo Title Text 1")
+![alt text](https://raw.githubusercontent.com/hermani456/hotel-app/now/MarkDownImages/login.png "Imagen Login")
 2. Ingresa tus credenciales para iniciar sesión.
 3. Una vez logueado, selecciona "Admin" en el menú para acceder a las funciones de administración.
 
-
-### Administrar tu Cuenta
-
-Cuando estés logueado, podrás administrar tu cuenta haciendo clic en el avatar que aparece en la esquina superior derecha. Aquí podrás:
-
-- Cambiar la imagen de tu avatar.
-- Actualizar tu contraseña.
-- Ver el historial de tus sesiones, incluyendo las direcciones IP desde donde se realizaron los inicios de sesión.
+![alt text](https://raw.githubusercontent.com/hermani456/hotel-app/now/MarkDownImages/admin.png "Imagen Admin Menu")
 
 ## Tipos de Habitación
 
@@ -37,11 +30,11 @@ Cuando estés logueado, podrás administrar tu cuenta haciendo clic en el avatar
 
 2. **Agregar un nuevo tipo de habitación**:
    - Completa los campos requeridos:
-     - **Nombre de la Habitación**: Escribe el nombre del tipo de habitación.
+     - **Nombre de la Habitación**: Escribe el nombre del tipo de habitación. Recomendamos elegir nombres descriptivos (como muestra la imagen) ya que en el siguiente menu la seleccion de habitacion sera por nombre.
      - **Descripción**: Proporciona una breve descripción del tipo de habitación.
-     - **Precio de la Habitación**: Ingresa el precio por noche de la habitación.
      - **Capacidad**: Indica la cantidad máxima de personas que puede alojar la habitación.
    - Haz clic en "Agregar" para finalizar.
+![alt text](https://raw.githubusercontent.com/hermani456/hotel-app/now/MarkDownImages/tipohabitacion.png "Imagen Tipos de Habitacion")
 
 ## Habitación
 
@@ -54,6 +47,7 @@ Cuando estés logueado, podrás administrar tu cuenta haciendo clic en el avatar
      - **Tipo de Habitación**: Selecciona el tipo de habitación de la lista desplegable (debe haber sido previamente agregado en "Tipos de Habitación").
      - **Estado**: Selecciona el estado actual de la habitación (Disponible u Ocupada).
    - Haz clic en "Agregar" para finalizar.
+![alt text](https://raw.githubusercontent.com/hermani456/hotel-app/now/MarkDownImages/habitacion.png "Imagen Habitacion")
 
 ## Huésped
 
@@ -64,10 +58,9 @@ Cuando estés logueado, podrás administrar tu cuenta haciendo clic en el avatar
    - Completa los campos requeridos:
      - **Nombre**: Escribe el nombre del huésped.
      - **Apellido**: Escribe el apellido del huésped.
-     - **Dirección**: Proporciona la dirección del huésped.
-     - **Teléfono**: Ingresa el número de teléfono del huésped.
-     - **Email**: Proporciona el correo electrónico del huésped.
+     - **Rut**: Proporciona el Rut del huésped.
    - Haz clic en "Agregar" para finalizar.
+![alt text](https://raw.githubusercontent.com/hermani456/hotel-app/now/MarkDownImages/huesped.png "Imagen Agregar Huesped")
 
 ## Reserva
 
@@ -80,9 +73,9 @@ Cuando estés logueado, podrás administrar tu cuenta haciendo clic en el avatar
      - **Número de Habitación**: Será asignado automáticamente según la disponibilidad.
      - **Fecha de Ingreso**: Selecciona la fecha de ingreso del huésped.
      - **Fecha de Salida**: Selecciona la fecha de salida del huésped.
-   - Haz clic en "Guardar" para finalizar.
-   - A continuación, selecciona los huéspedes que ocuparán la habitación de la lista de huéspedes disponibles.
-    - Haz clic en "Agregar" para finalizar.
+     - **Seleccion de Huespedes**: Segun la capacidad de la habitacion seleccionada, se abriran inputs para ingresar Huespedes.
+   - Haz clic en "Agregar" para finalizar.
+![alt text](https://raw.githubusercontent.com/hermani456/hotel-app/now/MarkDownImages/reserva.png "Imagen agregar huesped")
 
 ## Pasajeros
 
@@ -97,6 +90,15 @@ Cuando estés logueado, podrás administrar tu cuenta haciendo clic en el avatar
      - **Fecha de Ingreso**: La fecha en la que el huésped ingresó al hotel.
      - **Fecha de Salida**: La fecha en la que el huésped saldrá del hotel.
 
+![alt text](https://raw.githubusercontent.com/hermani456/hotel-app/now/MarkDownImages/resumen.png "Imagen resumen")
 
+### Administrar tu Cuenta
+
+Cuando estés logueado, podrás administrar tu cuenta haciendo clic en el avatar que aparece en la esquina superior derecha. Aquí podrás:
+
+- Cambiar la imagen de tu avatar.
+- Actualizar tu contraseña.
+- Ver el historial de tus sesiones, incluyendo las direcciones IP desde donde se realizaron los inicios de sesión.
+![alt text](https://raw.githubusercontent.com/hermani456/hotel-app/now/MarkDownImages/acc1.png "Imagen Admin Menu")
 
 ---
