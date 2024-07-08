@@ -24,11 +24,11 @@ Para acceder al Menú Administrador, asegúrate de estar logueado con tus creden
    <details>
       <summary>Credenciales</summary>
       
-      `Email: admin@duermebien.cl`
+      `Email: admin@duermebien.cl`\
       `Contraseña: taller_apps_2024`
       
       
-      `Email: empleado@duermebien.cl`
+      `Email: empleado@duermebien.cl`\
       `Contraseña: taller_apps_2024`
       
    </details>
