@@ -93,7 +93,7 @@ Para acceder al Menú Administrador, asegúrate de estar logueado con tus creden
 
 ![alt text](https://raw.githubusercontent.com/hermani456/hotel-app/now/MarkDownImages/resumen.png "Imagen resumen")
 
-### Administrar tu Cuenta
+## Administrar tu Cuenta
 
 Cuando estés logueado, podrás administrar tu cuenta haciendo clic en el avatar que aparece en la esquina superior derecha. Aquí podrás:
 
