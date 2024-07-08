@@ -45,9 +45,9 @@ export function CardHotel({ title, description, img, price, setShowForm, setPric
           </CardDescription>
           <div className="flex justify-between w-full space-x-8">
             {/* <Link href={`/reserva?title=${title}`}> */}
-            <Button onClick={handleClick} className="w-full">
+            {/* <Button onClick={handleClick} className="w-full">
               reservar
-            </Button>
+            </Button> */}
             {/* </Link> */}
           </div>
         </CardFooter>

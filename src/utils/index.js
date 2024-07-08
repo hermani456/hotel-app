@@ -1,4 +1,10 @@
-import { cardImage1, cardImage2, cardImage3, cardImage4, cardImage5 } from "../../public/img/cards"
+import {
+  cardImage1,
+  cardImage2,
+  cardImage3,
+  cardImage4,
+  cardImage5,
+} from "../../public/img/cards";
 
 export const navItems = [
   {
@@ -13,11 +19,6 @@ export const navItems = [
   },
   {
     id: 3,
-    name: "Reserva",
-    path: "/reserva",
-  },
-  {
-    id: 4,
     name: "Admin",
     path: "/admin",
   },
@@ -33,29 +34,29 @@ export const formatToClp = (price) => {
 export const roomItems = [
   {
     id: 1,
-    title: "Pieza 1",
-    description: "Pieza con vista al mar",
+    title: "Habitacion 1",
+    description: "Comoda habitacion",
     price: "10.000",
     img: cardImage1,
   },
   {
     id: 2,
-    title: "Pieza 2",
-    description: "Pieza con vista al cerro",
+    title: "Habitacion 2",
+    description: "Comoda habitacion",
     price: "20.000",
     img: cardImage2,
   },
   {
     id: 1,
-    title: "Pieza 3",
-    description: "Habitacion con vista a la chucha",
+    title: "Habitacion 3",
+    description: "Comoda habitacion",
     price: "30.000",
     img: cardImage3,
   },
   {
     id: 1,
-    title: "Pieza 4",
-    description: "Habitacion con vista a la cresta",
+    title: "Habitacion 4",
+    description: "Comoda habitacion",
     price: "40.000",
     img: cardImage4,
   },

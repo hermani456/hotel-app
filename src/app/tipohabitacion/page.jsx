@@ -6,6 +6,7 @@ import { Button } from "../components/ui/button";
 import { formatToClp } from "@/utils";
 import { NumericFormat } from "react-number-format";
 import CheckUserRole from "@/utils/roles";
+import Navbar from "../components/Navbar";
 
 const page = () => {
   const [rooms, setRooms] = useState([]);
@@ -82,128 +83,133 @@ const page = () => {
   };
 
   return (
-    <Layout>
-      <Container>
-        <CheckUserRole role="admin">
-          <h1 className="text-3xl lg:text-5xl font-bold text-center my-8">
-            Agregar tipos de habitacion
-          </h1>
-          <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
-            <div className="relative z-0 w-full mb-5 group">
-              <input
-                type="text"
-                name="numeroHabitacion"
-                id="numeroHabitacion"
-                className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=""
-                value={nombre}
-                onChange={(e) => setNombre(e.target.value)}
-                required
-              />
-              <label
-                htmlFor="numeroHabitacion"
-                className="peer-focus:font-medium absolute text-sm text-gray-950 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >
-                Nombre
-              </label>
-            </div>
-            <div className="relative z-0 w-full mb-5 group">
-              <input
-                type="text"
-                name="numeroHabitacion"
-                id="numeroHabitacion"
-                className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=""
-                value={descripcion}
-                onChange={(e) => setDescripcion(e.target.value)}
-                required
-              />
-              <label
-                htmlFor="numeroHabitacion"
-                className="peer-focus:font-medium absolute text-sm text-gray-950 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >
-                Descripcion
-              </label>
-            </div>
-            <div className="relative z-0 w-full mb-5 group">
-              <input
-                type="number"
-                name="numeroHabitacion"
-                id="numeroHabitacion"
-                className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=""
-                value={capacidad}
-                onChange={(e) => setCapacidad(e.target.value)}
-                required
-              />
-              <label
-                htmlFor="numeroHabitacion"
-                className="peer-focus:font-medium absolute text-sm text-gray-950 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >
-                Capacidad
-              </label>
-            </div>
+    <>
+      <Navbar />
+      <Layout>
+        <Container>
+          <CheckUserRole role="admin">
+            <h1 className="text-3xl lg:text-5xl font-bold text-center my-8">
+              Agregar tipos de habitacion
+            </h1>
+            <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
+              <div className="relative z-0 w-full mb-5 group">
+                <input
+                  type="text"
+                  name="numeroHabitacion"
+                  id="numeroHabitacion"
+                  className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  placeholder=""
+                  value={nombre}
+                  onChange={(e) => setNombre(e.target.value)}
+                  required
+                />
+                <label
+                  htmlFor="numeroHabitacion"
+                  className="peer-focus:font-medium absolute text-sm text-gray-950 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  Nombre
+                </label>
+              </div>
+              <div className="relative z-0 w-full mb-5 group">
+                <input
+                  type="text"
+                  name="numeroHabitacion"
+                  id="numeroHabitacion"
+                  className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  placeholder=""
+                  value={descripcion}
+                  onChange={(e) => setDescripcion(e.target.value)}
+                  required
+                />
+                <label
+                  htmlFor="numeroHabitacion"
+                  className="peer-focus:font-medium absolute text-sm text-gray-950 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  Descripcion
+                </label>
+              </div>
+              <div className="relative z-0 w-full mb-5 group">
+                <input
+                  type="number"
+                  name="numeroHabitacion"
+                  id="numeroHabitacion"
+                  className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  placeholder=""
+                  value={capacidad}
+                  onChange={(e) => setCapacidad(e.target.value)}
+                  required
+                />
+                <label
+                  htmlFor="numeroHabitacion"
+                  className="peer-focus:font-medium absolute text-sm text-gray-950 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  Capacidad
+                </label>
+              </div>
 
-            <div className="flex justify-between">
-              <Button type="submit">Agregar</Button>
-            </div>
-          </form>
-        </CheckUserRole>
+              <div className="flex justify-between">
+                <Button type="submit">Agregar</Button>
+              </div>
+            </form>
+          </CheckUserRole>
 
-        {rooms.length === 0 ? (
-          <h2 className="text-2xl font-bold text-text text-center mt-5">
-            No hay tipos de habitaciones disponibles
-          </h2>
-        ) : (
-          <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-              <thead className="text-xs dark:text-white uppercase bg-secondary">
-                <tr>
-                  <th scope="col" className="px-6 py-3">
-                    Nombre
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Descripcion
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Capacidad
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Borrar
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {rooms.map((room) => (
-                  <tr
-                    key={room.id_tipo_habitacion}
-                    className="odd:bg-white even:bg-gray-50"
-                  >
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium  whitespace-nowrap"
-                    >
-                      {room.nombre}
+          {rooms.length === 0 ? (
+            <h2 className="text-2xl font-bold text-text text-center mt-5">
+              No hay tipos de habitaciones disponibles
+            </h2>
+          ) : (
+            <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+              <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+                <thead className="text-xs dark:text-white uppercase bg-secondary">
+                  <tr>
+                    <th scope="col" className="px-6 py-3">
+                      Nombre
                     </th>
-                    <td className="px-6 py-4">{room.descripcion}</td>
-                    <td className="px-6 py-4">{room.capacidad}</td>
-                    <td className="px-6 py-4">
-                      <CheckUserRole role="admin">
-                        <button
-                          onClick={() => handleDelete(room.id_tipo_habitacion)}
-                        >
-                          <DeleteIcon className="w-5 fill-red-600" />
-                        </button>
-                      </CheckUserRole>
-                    </td>
+                    <th scope="col" className="px-6 py-3">
+                      Descripcion
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Capacidad
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Borrar
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </Container>
-    </Layout>
+                </thead>
+                <tbody>
+                  {rooms.map((room) => (
+                    <tr
+                      key={room.id_tipo_habitacion}
+                      className="odd:bg-white even:bg-gray-50"
+                    >
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium  whitespace-nowrap"
+                      >
+                        {room.nombre}
+                      </th>
+                      <td className="px-6 py-4">{room.descripcion}</td>
+                      <td className="px-6 py-4">{room.capacidad}</td>
+                      <td className="px-6 py-4">
+                        <CheckUserRole role="admin">
+                          <button
+                            onClick={() =>
+                              handleDelete(room.id_tipo_habitacion)
+                            }
+                          >
+                            <DeleteIcon className="w-5 fill-red-600" />
+                          </button>
+                        </CheckUserRole>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </Container>
+      </Layout>
+    </>
   );
 };
 

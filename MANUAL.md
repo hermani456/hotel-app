@@ -1,4 +1,4 @@
-# Manual de Usuario para la Aplicación de Administración de Hotel California
+# Manual de Usuario para la Aplicación de Administración de Hotel Duerme Bien
 
 ---
 
