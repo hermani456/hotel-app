@@ -9,6 +9,7 @@
 4. [Huésped](#huésped)
 5. [Reserva](#reserva)
 6. [Pasajeros](#pasajeros)
+7. [Administrar tu Cuenta](#administrar-tu-cuenta)
 
 ---
 
