@@ -20,6 +20,19 @@ Para acceder al Menú Administrador, asegúrate de estar logueado con tus creden
 1. Desde la esquina superior derecha, haz clic en el botón "Sign In".
 ![alt text](https://raw.githubusercontent.com/hermani456/hotel-app/now/MarkDownImages/login.png "Imagen Login")
 2. Ingresa tus credenciales para iniciar sesión.
+
+   <details>
+      <summary>Credenciales</summary>
+      
+      `Email: admin@duermebien.cl`
+      `Contraseña: taller_apps_2024`
+      
+      
+      `Email: empleado@duermebien.cl`
+      `Contraseña: taller_apps_2024`
+      
+   </details>
+
 3. Una vez logueado, selecciona "Admin" en el menú para acceder a las funciones de administración.
 
 ![alt text](https://raw.githubusercontent.com/hermani456/hotel-app/now/MarkDownImages/admin.png "Imagen Admin Menu")
