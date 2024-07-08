@@ -8,7 +8,6 @@ import { NumericFormat } from "react-number-format";
 import CheckUserRole from "@/utils/roles";
 
 const page = () => {
-  const [isEditing, setIsEditing] = useState(false);
   const [rooms, setRooms] = useState([]);
   const [nombreHabitacion, setNombreHabitacion] = useState("");
 
@@ -75,6 +74,7 @@ const page = () => {
         setRooms((prevRooms) =>
           prevRooms.filter((r) => r.id_tipo_habitacion !== id)
         );
+        alert("Tipo de habitacion eliminado");
       })
       .catch((error) => {
         console.error("Deletion failed:", error);
@@ -125,34 +125,6 @@ const page = () => {
                 Descripcion
               </label>
             </div>
-            {/* <div className="relative z-0 w-full mb-5 group">
-            <input
-              type="number"
-              name="numeroHabitacion"
-              id="numeroHabitacion"
-              className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=""
-              value={precio}
-              onChange={(e) => setPrecio(e.target.value)}
-              required
-            />
-            <NumericFormat
-              className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              value={precio}
-              onValueChange={({ value }) => setPrecio(value)}
-              decimalSeparator=","
-              thousandSeparator="."
-              placeholder=""
-              prefix="$"
-              required
-            />
-            <label
-              htmlFor="numeroHabitacion"
-              className="peer-focus:font-medium absolute text-sm text-gray-950 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
-              Precio
-            </label>
-          </div> */}
             <div className="relative z-0 w-full mb-5 group">
               <input
                 type="number"
@@ -174,9 +146,6 @@ const page = () => {
 
             <div className="flex justify-between">
               <Button type="submit">Agregar</Button>
-              {isEditing && (
-                <Button onClick={handleUpdateProduct}>Editar Producto</Button>
-              )}
             </div>
           </form>
         </CheckUserRole>
@@ -218,11 +187,6 @@ const page = () => {
                     </th>
                     <td className="px-6 py-4">{room.descripcion}</td>
                     <td className="px-6 py-4">{room.capacidad}</td>
-                    {/* <td className="px-6 py-4">
-                      <button onClick={() => updateProduct(room.id)}>
-                        <EditIcon className="w-5 fill-text" />
-                      </button>
-                    </td> */}
                     <td className="px-6 py-4">
                       <CheckUserRole role="admin">
                         <button

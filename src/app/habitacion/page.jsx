@@ -4,9 +4,9 @@ import Layout from "../components/Layout";
 import Container from "../components/ui/Container";
 import { Button } from "../components/ui/button";
 import CheckUserRole from "@/utils/roles";
+import { set } from "react-hook-form";
 
 const page = () => {
-  const [isEditing, setIsEditing] = useState(false);
   const [rooms, setRooms] = useState([]);
   const [nombreHabitacion, setNombreHabitacion] = useState("");
   const [submissionCount, setSubmissionCount] = useState(0);
@@ -28,14 +28,7 @@ const page = () => {
   const [tipoHabitacion, setTipoHabitacion] = useState("");
   const [estado, setEstado] = useState("Disponible");
 
-  const formatToClp = (price) => {
-    return new Intl.NumberFormat("es-CL", {
-      style: "currency",
-      currency: "CLP",
-    }).format(price);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     const newRoom = {
       numeroHabitacion,
@@ -43,65 +36,49 @@ const page = () => {
       tipoHabitacion,
       estado,
     };
-    setSubmissionCount((prevCount) => prevCount + 1);
-    fetch("/api/habitacion", {
+    const res = await fetch("/api/habitacion", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newRoom),
-    })
-      .then((res) => {
-        if (res.status === 409) {
-          alert("Numero de habitación ya existe");
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setRooms((prevRooms) => [...prevRooms, data]);
-        setNumeroHabitacion("");
-        setHotel("1");
-        setTipoHabitacion("");
-        setEstado("Disponible");
-      });
+    });
+    if (res.status === 409) {
+      alert("Numero de habitación ya existe");
+      return;
+    }
+    setSubmissionCount((prevCount) => prevCount + 1);
+    const data = await res.json();
+    setRooms((prevRooms) => [...prevRooms, data]);
+    setNumeroHabitacion("");
+    setHotel("1");
+    setTipoHabitacion("");
+    setEstado("Disponible");
   };
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const newRoom = {
-  //     numeroHabitacion,
-  //     hotel,
-  //     tipoHabitacion,
-  //     estado,
-  //   };
-  //   setSubmissionCount((prevCount) => prevCount + 1);
-  //   fetch("/api/habitacion", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(newRoom),
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       // setRooms((prevRooms) => [...prevRooms, data]);
-  //       setNumeroHabitacion("");
-  //       setHotel("1");
-  //       setTipoHabitacion("");
-  //       setEstado("Disponible");
-  //     });
-  // };
 
   const handleDelete = async (id) => {
-    console.log("id", id);
-    fetch("/api/habitacion", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(id),
-    })
-      .then((res) => res.json())
-      .then(() => setSubmissionCount((prevCount) => prevCount + 1));
+    try {
+      const res = await fetch("/api/habitacion", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(id),
+      });
+      const data = await res.json();
+      if (data.code === "23503") {
+        alert(
+          "No se puede eliminar la habitación, ya que tiene pasajeros alojados"
+        );
+        return;
+      }
+      setRooms((prevRooms) =>
+        prevRooms.filter((r) => r.numero_habitacion !== id)
+      );
+      alert("Habitación eliminada");
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   return (
@@ -188,9 +165,6 @@ const page = () => {
             </div>
             <div className="flex justify-between">
               <Button type="submit">Agregar</Button>
-              {isEditing && (
-                <Button onClick={handleUpdateProduct}>Editar Producto</Button>
-              )}
             </div>
           </form>
         </CheckUserRole>
@@ -218,18 +192,15 @@ const page = () => {
                   <th scope="col" className="px-6 py-3">
                     Estado
                   </th>
-                  {/* <th scope="col" className="px-6 py-3">
-                    Editar
-                  </th> */}
                   <th scope="col" className="px-6 py-3">
                     Borrar
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {rooms.map((room) => (
+                {rooms.map((room, i) => (
                   <tr
-                    key={room.numero_habitacion}
+                    key={room.numero_habitacion + i}
                     className="odd:bg-white even:bg-gray-50"
                   >
                     <th
@@ -242,11 +213,6 @@ const page = () => {
                     <td className="px-6 py-4">{room.descripcion}</td>
                     <td className="px-6 py-4">{room.capacidad}</td>
                     <td className="px-6 py-4">{room.estado}</td>
-                    {/* <td className="px-6 py-4">
-                      <button onClick={() => updateProduct(room.id)}>
-                        <EditIcon className="w-5 fill-text" />
-                      </button>
-                    </td> */}
                     <td className="px-6 py-4">
                       <CheckUserRole role="admin">
                         <button
@@ -266,12 +232,6 @@ const page = () => {
     </Layout>
   );
 };
-
-const EditIcon = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" {...props}>
-    <path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z" />
-  </svg>
-);
 
 const DeleteIcon = (props) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" {...props}>

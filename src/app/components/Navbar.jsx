@@ -32,7 +32,7 @@ function Navbar() {
         <SheetContent side="left">
           <Link href="#">
             <MountainIcon className="h-6 w-6" />
-            <span className="sr-only">Acme Inc</span>
+            <span className="sr-only">Hotel Duerme Bien</span>
           </Link>
           <div className="grid gap-2 py-6">
             {navItems.map((item) => (
@@ -61,7 +61,7 @@ function Navbar() {
       <Link className="mr-6 hidden lg:flex" href="#">
         <MountainIcon className="h-6 w-6" />
         {/* <Image src={hotelLogo} height={24} width={24} /> */}
-        <span className="sr-only">Hotel</span>
+        <span className="sr-only">Hotel Duerme Bien</span>
       </Link>
       <NavigationMenu className="hidden lg:flex">
         <NavigationMenuList>

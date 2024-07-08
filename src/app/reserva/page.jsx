@@ -15,8 +15,6 @@ const page = () => {
   const [pasajeros, setPasajeros] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  // const [numeroHabitacion, setNumeroHabitacion] = useState("");
-  // const [nombreHabitacion, setNombreHabitacion] = useState("");
   const [capacidadHabitacion, setCapacidadHabitacion] = useState("");
 
   const [huespedesSeleccionados, setHuespedesSeleccionados] = useState([]);
@@ -31,9 +29,7 @@ const page = () => {
     const selectedValue = e.target.value;
     const [numero, nombre, capacidad] = selectedValue.split(",");
 
-    // Update your state here
     setNumeroHabitacion(numero);
-    // Assuming you have setter functions for the other pieces of information
     setNombreHabitacion(nombre);
     setCapacidadHabitacion(capacidad);
   };
@@ -42,10 +38,7 @@ const page = () => {
   const [fechaIngreso, setFechaIngreso] = useState("");
   const [fechaSalida, setFechaSalida] = useState("");
   const [precioTotal, setPrecioTotal] = useState("");
-
   const [huespedes, setHuespedes] = useState([]);
-
-  const [idReserva, setIdReserva] = useState("");
 
   const [selectedHuesped, setSelectedHuesped] = useState(
     Array(capacidadHabitacion).fill("")
@@ -114,6 +107,11 @@ const page = () => {
       alert("Reserva Agregada con Exito");
     }
   };
+
+  useEffect(() => {
+    const newPrecioTotal = capacidadHabitacion * 20000;
+    setPrecioTotal(newPrecioTotal);
+  }, [capacidadHabitacion, setPrecioTotal]);
 
   const inputs = [];
 
@@ -224,7 +222,7 @@ const page = () => {
                 className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=""
                 value={precioTotal}
-                onChange={(e) => setPrecioTotal(e.target.value)}
+                // onChange={(e) => setPrecioTotal(e.target.value)}
                 required
               />
               <label
@@ -234,31 +232,10 @@ const page = () => {
                 Precio Total
               </label>
             </div>
-            {/* <div className="relative z-0 w-full mb-5 group">
-            <input
-              type="text"
-              name="pasajeros"
-              id="pasajeros"
-              className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=""
-              value={pasajeros}
-              onChange={(e) => setPasajeros(e.target.value)}
-              required
-            />
-            <label
-              htmlFor="pasajeros"
-              className="peer-focus:font-medium absolute text-sm text-gray-950 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
-              Precio Total
-            </label>
-          </div> */}
             {inputs}
 
             <div className="flex justify-between">
               <Button type="submit">Agregar</Button>
-              {isEditing && (
-                <Button onClick={handleUpdateProduct}>Editar Producto</Button>
-              )}
             </div>
           </form>
         </CheckUserRole>

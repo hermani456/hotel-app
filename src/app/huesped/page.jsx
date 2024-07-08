@@ -6,16 +6,11 @@ import { Button } from "../components/ui/button";
 import CheckUserRole from "@/utils/roles";
 
 const page = () => {
-  const [isEditing, setIsEditing] = useState(false);
   const [rooms, setRooms] = useState([]);
   const [nombreHabitacion, setNombreHabitacion] = useState("");
-  // const [submissionCount, setSubmissionCount] = useState(0);
 
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
-  const [direccion, setDireccion] = useState("");
-  const [telefono, setTelefono] = useState("");
-  const [email, setEmail] = useState("");
   const [rut, setRut] = useState("");
 
   useEffect(() => {
@@ -37,7 +32,6 @@ const page = () => {
       apellido,
       rut,
     };
-    // setSubmissionCount((prevCount) => prevCount + 1);
     fetch("/api/huesped", {
       method: "POST",
       headers: {
@@ -50,25 +44,25 @@ const page = () => {
         setRooms((prevRooms) => [...prevRooms, data]);
         setNombre("");
         setApellido("");
-        setDireccion("");
-        setTelefono("");
-        setEmail("");
+        setRut("");
       });
   };
 
-  const handleDelete = (id) => {
-    console.log("id", id);
-    fetch("/api/huesped", {
+  const handleDelete = async (id) => {
+    const res = await fetch("/api/huesped", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(id),
-    })
-      .then((res) => res.json())
-      .then(() =>
-        setRooms((prevRooms) => prevRooms.filter((r) => r.id_huesped !== id))
-      );
+    });
+    const data = await res.json();
+    if (data.code === "23503") {
+      alert("No se puede borrar el huesped porque tiene reservas");
+      return;
+    }
+    setRooms((prevRooms) => prevRooms.filter((r) => r.id_huesped !== id));
+    alert("Huesped borrado");
   };
 
   return (
@@ -133,47 +127,8 @@ const page = () => {
                 RUT
               </label>
             </div>
-            {/* <div className="relative z-0 w-full mb-5 group">
-            <input
-              type="number"
-              name="numeroHabitacion"
-              id="numeroHabitacion"
-              className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=""
-              value={telefono}
-              onChange={(e) => setTelefono(e.target.value)}
-              required
-            />
-            <label
-              htmlFor="numeroHabitacion"
-              className="peer-focus:font-medium absolute text-sm text-gray-950 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
-              Telefono
-            </label>
-          </div>
-          <div className="relative z-0 w-full mb-5 group">
-            <input
-              type="email"
-              name="numeroHabitacion"
-              id="numeroHabitacion"
-              className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=""
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <label
-              htmlFor="numeroHabitacion"
-              className="peer-focus:font-medium absolute text-sm text-gray-950 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
-              email
-            </label>
-          </div> */}
             <div className="flex justify-between">
               <Button type="submit">Agregar</Button>
-              {isEditing && (
-                <Button onClick={handleUpdateProduct}>Editar Producto</Button>
-              )}
             </div>
           </form>
         </CheckUserRole>
@@ -201,7 +156,6 @@ const page = () => {
                 </tr>
               </thead>
               <tbody>
-                {/* id_huesped | nombre | apellido | fecha_nacimiento | direccion | telefono |    email */}
                 {rooms.map((room) => (
                   <tr
                     key={room.id_huesped}
@@ -215,11 +169,6 @@ const page = () => {
                     </th>
                     <td className="px-6 py-4">{room.apellido}</td>
                     <td className="px-6 py-4">{room.rut}</td>
-                    {/* <td className="px-6 py-4">
-                      <button onClick={() => updateProduct(room.id)}>
-                        <EditIcon className="w-5 fill-text" />
-                      </button>
-                    </td> */}
                     <td className="px-6 py-4">
                       <CheckUserRole role="admin">
                         <button onClick={() => handleDelete(room.id_huesped)}>
@@ -237,12 +186,6 @@ const page = () => {
     </Layout>
   );
 };
-
-const EditIcon = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" {...props}>
-    <path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z" />
-  </svg>
-);
 
 const DeleteIcon = (props) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" {...props}>

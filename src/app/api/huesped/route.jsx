@@ -19,10 +19,13 @@ export async function GET() {
 
 export async function DELETE(req) {
   const idHuesped = await req.json();
-  console.log("body", idHuesped);
-  const data = await pool.query(
-    "DELETE FROM huesped WHERE id_huesped = $1 RETURNING *",
-    [idHuesped]
-  );
-  return NextResponse.json(data.rows[0]);
+  try {
+    const data = await pool.query(
+      "DELETE FROM huesped WHERE id_huesped = $1 RETURNING *",
+      [idHuesped]
+    );
+    return NextResponse.json(data.rows[0]);
+  } catch (error) {
+    return NextResponse.json(error);
+  }
 }

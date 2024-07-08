@@ -179,7 +179,23 @@ CREATE DATABASE hotel;
    );
 ```
 
-5. Inserta un registro en la tabla `hotel`:
+5. Inserta esta funcion y su triger respectivo. Cada vez que se inserte una reserva, la habitacion correspondiente cambiara su estado a 'Ocupada'
+
+```sql
+-- Función para actualizar el estado de la habitación
+CREATE OR REPLACE FUNCTION update_room_status() RETURNS TRIGGER AS $$
+BEGIN
+   UPDATE habitacion SET estado = 'Ocupada' WHERE numero_habitacion = NEW.numero_habitacion;
+   RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Trigger para llamar a la función después de insertar una reserva
+CREATE TRIGGER room_status_update AFTER INSERT ON reserva
+FOR EACH ROW EXECUTE PROCEDURE update_room_status();
+```
+
+6. Inserta un registro en la tabla `hotel`:
 
 ```sql
 INSERT INTO hotel VALUES (1, 'Hotel Duerme Bien', 'Calle 1 # 2-3', '1234567', 'hotel@hotel.cl');

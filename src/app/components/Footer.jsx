@@ -13,7 +13,7 @@ const Footer = () => {
             <div className="flex flex-col justify-center items-center">
               <HotelLogo className="h-16 w-16" />
               <h3 className="text-2xl text-center font-medium">Hotel</h3>
-              <p className="text-center font-medium">california</p>
+              <p className="text-center font-medium">Duerme Bien</p>
             </div>
           </div>
           <div>
@@ -45,7 +45,7 @@ const Footer = () => {
             <ul className="">
               <li className="flex items-center gap-2">+5698765432</li>
               <li className="flex items-center gap-2">
-                <a href="mailto:hotel@hotel.cl">hotel@hotel.cl</a>
+                <a href="mailto:hotel@hotel.cl">hotel@duermebien.cl</a>
               </li>
               <li className="flex items-center gap-2">Iquique</li>
             </ul>
@@ -53,7 +53,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="flex justify-center w-full pb-4 text-center text-sm text-secondary bottom-0 absolute">
-        <p>© 2024 Copyright: hotel</p>
+        <p>© 2024 Copyright: Hotel Duerme Bien</p>
       </div>
     </footer>
   );
